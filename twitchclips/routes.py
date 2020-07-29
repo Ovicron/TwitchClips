@@ -1,11 +1,10 @@
 from twitchclips import app, db, bcrypt, login_manager
 from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm
 from twitchclips.models import User, Post
-from flask import render_template, flash, url_for, redirect, request, send_file
+from flask import render_template, flash, url_for, redirect, request
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
-import io
 
 
 @app.route('/')
@@ -152,12 +151,17 @@ def create_post():
             else:
                 filename = secure_filename(image.filename)
                 image.save(os.path.join(
-                    app.config['IMAGE_UPLOADS'], image.filename))
+                    app.config['IMAGE_UPLOADS'], filename))
+
+                path = os.path.join(app.config['IMAGE_UPLOADS'], filename)
+                print(path)
+                new_path = path.split('twitchclips')[-1]
+
     # Regular Posts
     form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data,
-                    body=form.body.data, link=filename, user_id=current_user.id)
+                    body=form.body.data, link=new_path, user_id=current_user.id)
         db.session.add(post)
         db.session.commit()
         flash('Post submitted', 'success')
