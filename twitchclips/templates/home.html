@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% for post in posts %}
+
+<div class="container-fluid text-center">
+    <h1 class='text-info'> {{ post.title }} </h1>
+    <h4>{{ post.body }}</h4>
+    <br>
+    <img class='img-fluid' id="user-image" src="{{ url_for('static', filename='images/uploads/test.png') }}">
+</div>
+
+<br>
+{% endfor %}
+{% endblock content %}
