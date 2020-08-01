@@ -12,9 +12,31 @@
 }
 
 .container-fluid{
-    margin-top: 3em;    
+    margin: 3em;  
 }
 
 .row{
 // YEA
+}
+
+.post-container{
+// Home post container - individual
+}
+
+.action-btn{
+    display: flex;
+    justify-content: end;
+    margin-right: 1em;
+}
+
+.post-page-container{
+    height: 100%;
+}
+
+.comment-section{
+    border: 1px solid rgb(202, 202, 202);
+}
+
+.user-page-name{
+    color: rgb(188, 0, 235);
 }

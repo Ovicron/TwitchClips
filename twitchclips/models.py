@@ -17,6 +17,8 @@ class User(db.Model, UserMixin):
                             default=datetime.utcnow)
     posts = db.relationship('Post', backref='author',
                             lazy=True, passive_deletes=True)
+    comments = db.relationship(
+        'Comment', backref='author', lazy=True, passive_deletes=True)
 
     def __repr__(self):
         return f"User('{self.email}', '{self.username}', '{self.date_joined}')"
@@ -31,6 +33,19 @@ class Post(db.Model):
                             default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete='CASCADE'), nullable=False)
+    comments = db.relationship(
+        'Comment', backref='commenter', lazy=True, passive_deletes=True)
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.body}', '{self.link}', '{self.date_posted}')"
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, nullable=False)
+    date_replied = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete='CASCADE'))
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        'post.id', ondelete='CASCADE'))

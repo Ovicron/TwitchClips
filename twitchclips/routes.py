@@ -1,7 +1,7 @@
 from twitchclips import app, db, bcrypt, login_manager
-from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm
-from twitchclips.models import User, Post
-from flask import render_template, flash, url_for, redirect, request
+from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm, CommentForm, EditPostForm, EditCommentForm
+from twitchclips.models import User, Post, Comment
+from flask import render_template, flash, url_for, redirect, request, abort, after_this_request
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 @app.route('/')
 @app.route('/home')
 def home():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.date_posted.desc())
     return render_template('home.html', title='Home', posts=posts)
 
 
@@ -60,7 +60,7 @@ def logout():
 # -----------------------------------------------------------------------------------------------------------
 
 
-# USER SETTINGS PAGE AND PREFERENCES  ------------------------------------------------------------------------
+# USER SETTINGS PAGE AND PREFERENCES ------------------------------------------------------------------------
 @login_required
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -104,7 +104,7 @@ def delete_all_posts():
 # -----------------------------------------------------------------------------------------------------------
 
 
-# USER POSTS AND IMAGE UPLOADS ------------------------------------------------------------------------------------
+# USER CREATES POST AND IMAGE UPLOADS ---------------------------------------------------------------------------------
 app.config['IMAGE_UPLOADS'] = 'C:/Users/ovicr/Desktop/VSCode Projects/TwitchClips/twitchclips/static/images/uploads'
 app.config['ALLOWED_IMG_EXTENSIONS'] = ['JPG', 'PNG', 'JPEG', 'GIF']
 app.config['MAX_IMG_SIZE'] = 5000000
@@ -161,10 +161,106 @@ def create_post():
     form = PostForm()
     if form.validate_on_submit():
         post = Post(title=form.title.data,
-                    body=form.body.data, link=new_path, user_id=current_user.id)
+                    body=form.body.data, link=new_path, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Post submitted', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title='Create Post', form=form)
+# -----------------------------------------------------------------------------------------------------------
+
+
+# POST ROUTES -----------------------------------------------------------------------------------------------
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+def post_page(post_id):
+    post = Post.query.get_or_404(post_id)
+    comments = Comment.query.filter_by(post_id=post.id)
+    return render_template('post_page.html', title=post.title, post=post, comments=comments)
+
+
+@app.route('/user/<string:username>')
+def user_posts(username):
+    user = User.query.filter_by(username=username).first()
+    posts = Post.query.filter_by(
+        author=current_user).order_by(Post.date_posted.desc())
+    return render_template('user_posts.html', title=f"Submissions by: {user.username}", user=user, posts=posts)
+
+
+@login_required
+@app.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
+def edit_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+
+    form = EditPostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        db.session.commit()
+        flash('Post updated', 'success')
+        return redirect(url_for('post_page', post_id=post.id))
+    else:
+        form.title.data = post.title
+        form.body.data = post.body
+    return render_template('edit_post.html', title='Edit Post', form=form)
+
+
+@login_required
+@app.route('/post/<int:post_id>/delete')
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Post deleted!', 'success')
+    return redirect(url_for('home'))
+# -----------------------------------------------------------------------------------------------------------
+
+
+# COMMENT ROUTES -----------------------------------------------------------------------------------------------
+@app.route('/post/<int:post_id>/comment', methods=['GET', 'POST'])
+def comment(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(body=form.body.data,
+                          user_id=current_user.id, post_id=post.id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment posted.', 'success')
+        return redirect(url_for('post_page', post_id=post.id))
+    return render_template('reply.html', title=f"Reply to {post.author.username}", post=post, form=form)
+
+
+@login_required
+@app.route('/edit/comment/<int:comment_id>', methods=['GET', 'POST'])
+def edit_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    if comment.author != current_user:
+        abort(403)
+    form = EditCommentForm()
+    if form.validate_on_submit():
+        comment.body = form.body.data
+        db.session.commit()
+        flash('Comment updated!', 'success')
+    else:
+        request.method == 'GET'
+        form.body.data = comment.body
+    return render_template('edit_reply.html', title='Edit Reply', form=form)
+
+
+@login_required
+@app.route('/delete/comment/<int:comment_id>')
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    if comment.author != current_user:
+        abort(403)
+    else:
+        db.session.delete(comment)
+        db.session.commit()
+        flash('Comment deleted', 'success')
+    return redirect(request.referrer)
 # -----------------------------------------------------------------------------------------------------------

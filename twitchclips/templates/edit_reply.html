@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container-fluid mt-5">
+    <form action="" method='POST'>
+        {{ form.hidden_tag() }}
+        <div class='form-group'>
+            {{ form.body.label(class='form-control-label') }}
+            {% if form.body.errors %}
+            {{ form.body(class='form-control form-control-lg is-invalid') }}
+            <div class='invalid-feedback'>
+                {% for error in form.body.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.body(class='form-control form-control-lg') }}
+            {% endif %}
+        </div>
+        <div class='form-group'>
+            {{ form.submit(class='btn btn-outline-info') }}
+        </div>
+    </form>
+    <input class='btn btn-lg btn-outline-dark mt-5' type="button" value="← Click to go back."
+        onclick="window.history.back();" />
+</div>
+{% endblock content %}
