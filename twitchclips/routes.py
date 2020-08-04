@@ -1,10 +1,11 @@
 from twitchclips import app, db, bcrypt, login_manager
-from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm, CommentForm, EditPostForm, EditCommentForm
+from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm, ClipForm, CommentForm, EditPostForm, EditCommentForm
 from twitchclips.models import User, Post, Comment
 from flask import render_template, flash, url_for, redirect, request, abort, after_this_request
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
+from twitchclips.parser import get_clip_link
 
 
 @app.route('/')
@@ -66,7 +67,7 @@ def logout():
 def settings():
     if not current_user.is_authenticated:
         flash('You must login to access that page.', 'danger')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
 
     form = UpdateAccountForm()
     if form.validate_on_submit():
@@ -85,6 +86,9 @@ def settings():
 @login_required
 @app.route('/delete/account', methods=['GET', 'POST'])
 def delete_account():
+    if not current_user.is_authenticated:
+        abort(403)
+
     if current_user.is_authenticated:
         db.session.query(User).filter_by(id=current_user.id).delete()
         db.session.commit()
@@ -96,6 +100,9 @@ def delete_account():
 @login_required
 @app.route('/delete/posts', methods=['GET', 'POST'])
 def delete_all_posts():
+    if not current_user.is_authenticated:
+        abort(403)
+
     if current_user.is_authenticated:
         db.session.query(Post).filter(Post.user_id == current_user.id).delete()
         db.session.commit()
@@ -104,9 +111,9 @@ def delete_all_posts():
 # -----------------------------------------------------------------------------------------------------------
 
 
-# USER CREATES POST AND IMAGE UPLOADS ---------------------------------------------------------------------------------
+# USER CREATES POST AND IMAGE/CLIP UPLOADS ---------------------------------------------------------------------------
 app.config['IMAGE_UPLOADS'] = 'C:/Users/ovicr/Desktop/VSCode Projects/TwitchClips/twitchclips/static/images/uploads'
-app.config['ALLOWED_IMG_EXTENSIONS'] = ['JPG', 'PNG', 'JPEG', 'GIF']
+app.config['ALLOWED_IMG_EXTENSIONS'] = ['JPG', 'PNG', 'JPEG', 'GIF', 'MP4', 'WEBM', "MOV"]
 app.config['MAX_IMG_SIZE'] = 5000000
 
 
@@ -129,8 +136,12 @@ def allowed_image_size(filesize):
         return False
 
 
-@app.route('/create/post', methods=['GET', 'POST'])
-def create_post():
+@login_required
+@app.route('/submit/post', methods=['GET', 'POST'])
+def submit_post():
+    if not current_user.is_authenticated:
+        abort(403)
+
     # Image upload and validation
     if request.method == 'POST':
         if request.files:
@@ -154,19 +165,34 @@ def create_post():
                     app.config['IMAGE_UPLOADS'], filename))
 
                 path = os.path.join(app.config['IMAGE_UPLOADS'], filename)
-                print(path)
                 new_path = path.split('twitchclips')[-1]
 
-    # Regular Posts
+    # Regular Posts with Image
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data,
-                    body=form.body.data, link=new_path, author=current_user)
+        post = Post(title=form.title.data, clip="NONE", body=form.body.data, link=new_path, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Post submitted', 'success')
         return redirect(url_for('home'))
-    return render_template('create_post.html', title='Create Post', form=form)
+    return render_template('create_post.html', title='Submit Post', form=form)
+
+
+# CLIP POST ROUTE
+@app.route('/submit/clip', methods=['GET', 'POST'])
+def submit_clip():
+    if not current_user.is_authenticated:
+        abort(403)
+
+    form = ClipForm()
+    if form.validate_on_submit():
+        clip_mp4 = get_clip_link(link=form.clip.data)
+        post = Post(title=form.title.data, clip=clip_mp4, body=form.body.data, link="NONE", author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Clip submitted', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_clip.html', title='Submit Clip', form=form)
 # -----------------------------------------------------------------------------------------------------------
 
 
@@ -181,8 +207,7 @@ def post_page(post_id):
 @app.route('/user/<string:username>')
 def user_posts(username):
     user = User.query.filter_by(username=username).first()
-    posts = Post.query.filter_by(
-        author=current_user).order_by(Post.date_posted.desc())
+    posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc())
     return render_template('user_posts.html', title=f"Submissions by: {user.username}", user=user, posts=posts)
 
 
@@ -221,8 +246,12 @@ def delete_post(post_id):
 
 
 # COMMENT ROUTES -----------------------------------------------------------------------------------------------
+@login_required
 @app.route('/post/<int:post_id>/comment', methods=['GET', 'POST'])
 def comment(post_id):
+    if not current_user.is_authenticated:
+        abort(403)
+
     post = Post.query.get_or_404(post_id)
     form = CommentForm()
     if form.validate_on_submit():

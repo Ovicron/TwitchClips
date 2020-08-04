@@ -29,6 +29,7 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.Text, nullable=False)
     link = db.Column(db.String(300))
+    clip = db.Column(db.String(300))
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey(

@@ -1,7 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="container-fluid">
-    <h1 class="display-5 text-center">Submit Post</h1>
+    <h1 class="display-5 text-center">Submit Clip</h1>
+    <h6 class="display-5 text-center">Only twitch clip links are allowed.</h6>
     <form method='POST' action='' enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset class='form-group'>
@@ -20,6 +21,20 @@
             </div>
 
             <div class='form-group'>
+                {{ form.clip.label(class='form-control-label') }}
+                {% if form.clip.errors %}
+                {{ form.clip(class='form-control form-control-lg is-invalid') }}
+                <div class='invalid-feedback'>
+                    {% for error in form.clip.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.clip(class='form-control form-control-lg') }}
+                {% endif %}
+            </div>
+
+            <div class='form-group'>
                 {{ form.body.label(class='form-control-label') }}
                 {% if form.body.errors %}
                 {{ form.body(class='form-control form-control-lg is-invalid') }}
@@ -32,19 +47,6 @@
                 {{ form.body(class='form-control form-control-lg') }}
                 {% endif %}
             </div>
-
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                </div>
-                <div class="custom-file">
-                    <input type="file" name='uploadImg' oninput="filesize(this);" class="custom-file-input"
-                        id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-            </div>
-            <small class='text-muted'>Image Required - 5 MB</small>
-
         </fieldset>
         <div class='form-group'>
             {{ form.submit(class='btn btn-outline-info') }}
@@ -52,19 +54,3 @@
     </form>
 </div>
 {% endblock content %}
-
-
-{% block scripts %}
-<script>
-    // Displays file name on the upload input form.
-    $(".custom-file-input").on("change", function () {
-        var fileName = $(this).val().split("\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
-
-    // Get Image Size
-    function filesize(elem) {
-        document.cookie = `filesize=${elem.files[0].size}`;
-    }
-</script>
-{% endblock scripts %}

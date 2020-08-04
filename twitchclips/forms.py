@@ -31,6 +31,13 @@ class PostForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class ClipForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired(), Length(max=100)])
+    clip = StringField('Clip', validators=[DataRequired()])
+    body = TextAreaField('Body', validators=[Length(max=3000)])
+    submit = SubmitField('Submit')
+
+
 class CommentForm(FlaskForm):
     body = TextAreaField('Comment', validators=[DataRequired(), Length(max=2000)])
     submit = SubmitField('Submit')
