@@ -23,6 +23,15 @@
         {% elif post.clip == "NONE" %}
         <img class='img-fluid' id="user-image" src="{{ post.link }}">
         {% endif %}
+
+        <!-- like count validation -->
+        {% if post.likes|count <= 0 %}
+        <h5 class='mt-3 font-weight-bold'>This post has no likes.</h5>
+        {% elif post.likes|count <= 1 %}
+        <h5 class='mt-3 font-weight-bold'>{{ post.likes|count }} Like</h5>
+        {% else %}
+        <h5 class='mt-3 font-weight-bold'>{{ post.likes|count }} Likes</h5>
+        {% endif %}
     </div>
     <!-- End main content -->
 

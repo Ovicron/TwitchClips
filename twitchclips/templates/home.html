@@ -20,6 +20,17 @@
 </div>
 <a href="{{ url_for('post_page', post_id=post.id) }}" class="btn btn btn-outline-primary ml-3">View All Comments</a>
 
+<div class="like-count float-right">
+    <!-- like count validation -->
+    {% if post.likes|count <= 0 %}
+    <h5 class='mt-3 font-weight-bold'>This post has no likes.</h5>
+    {% elif post.likes|count <= 1 %}
+    <h5 class='mt-3 font-weight-bold'>{{ post.likes|count }} Like</h5>
+    {% else %}
+    <h5 class='mt-3 font-weight-bold'>{{ post.likes|count }} Likes</h5>
+    {% endif %}
+</div>
+<img src="../static/images/icons/favorite_border-black-24dp.svg" class='float-right mr-2 mt-3'>
 <hr>
 {% endfor %}
 

@@ -242,7 +242,7 @@ def delete_post(post_id):
         db.session.commit()
         flash('Post deleted!', 'success')
     return redirect(url_for('home'))
-# -----------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------
 
 
 # COMMENT ROUTES -----------------------------------------------------------------------------------------------
@@ -292,4 +292,19 @@ def delete_comment(comment_id):
         db.session.commit()
         flash('Comment deleted', 'success')
     return redirect(request.referrer)
-# -----------------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------------------------------------
+
+
+# RATINGS ROUTES ---------------------------------------------------------------------------------------------------
+@login_required
+@app.route('/post/<int:post_id>/<action>', methods=['GET', 'POST'])
+def like_action(post_id, action):
+    post = Post.query.filter_by(id=post_id).first_or_404()
+    if action == 'Like':
+        current_user.like_post(post)
+        db.session.commit()
+    if action == 'Dislike':
+        current_user.unlike_post(post)
+        db.session.commit()
+    return redirect(request.referrer)
+# --------------------------------------------------------------------------------------------------------------------
