@@ -1,13 +1,12 @@
 from twitchclips import app, db, bcrypt, login_manager
 from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm, ClipForm, CommentForm, EditPostForm, EditCommentForm
 from twitchclips.models import User, Post, Comment
-from flask import render_template, flash, url_for, redirect, request, abort, after_this_request
+from flask import render_template, flash, url_for, redirect, request, abort
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
-# Twitch Clips Imports
 from twitchclips.parser import get_clip_link
-from twitch import TwitchClient
+from twitch import TwitchClient  # Twitch API module
 
 
 @app.route('/')
@@ -318,7 +317,6 @@ def like_action(post_id, action):
 @app.route('/games')
 def games():
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
-    # games = client.games.get_top(limit=16)
     page = request.args.get('page', 0, type=int)
     page_size = 16
     try:
@@ -340,7 +338,6 @@ def games():
 @app.route('/streamers')
 def streamers():
     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
-    # streamers = client.streams.get_live_streams(limit=5)
     page = request.args.get('page', 0, type=int)
     page_size = 5
     try:
