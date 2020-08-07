@@ -9,7 +9,7 @@
             href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a> on
         {{ post.date_posted.strftime('%m/%d/%Y - %I:%M %p') }}</p>
     {% if post.link == "NONE" %}
-    <div class="vid-container d-flex justify-content-center">
+    <div class="vid-container d-flex justify-content-center embed-responsive embed-responsive-16by9">
         <video width="900" height="580" controls>
             <source src="{{ post.clip }}" type="video/mp4">
         </video>

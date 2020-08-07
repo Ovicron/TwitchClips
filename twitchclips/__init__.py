@@ -12,6 +12,7 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
 app.config['SECRET_KEY'] = 'VERYVERYSECRETKEY'
+app.config['TWITCH_CLIENT_ID'] = '95asuy3jl29tye4odxmykelgawgot6'
 
 ENV = 'prod'
 

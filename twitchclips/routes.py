@@ -5,7 +5,9 @@ from flask import render_template, flash, url_for, redirect, request, abort, aft
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
+# Twitch Clips Imports
 from twitchclips.parser import get_clip_link
+from twitch import TwitchClient
 
 
 @app.route('/')
@@ -16,6 +18,8 @@ def home():
 
 
 # USER REGISTRATION AND LOGIN VIEWS --------------------------------------------------------------------
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -308,3 +312,54 @@ def like_action(post_id, action):
         db.session.commit()
     return redirect(request.referrer)
 # --------------------------------------------------------------------------------------------------------------------
+
+
+# TWITCH API ROUTES ---------------------------------------------------------------------------------------------------
+@app.route('/games')
+def games():
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+    # games = client.games.get_top(limit=16)
+    page = request.args.get('page', 0, type=int)
+    page_size = 16
+    try:
+        games = client.games.get_top(limit=page_size, offset=page * page_size)
+    except:
+        return redirect(request.referrer)
+
+    games_list = []
+    for game in games:
+        game_info = {
+            'name': game['game']['name'],
+            'viewers': game['viewers'],
+            'thumbnail': game['game']['box']['large']
+        }
+        games_list.append(game_info)
+    return render_template('games.html', title='Top Games', games_list=games_list, page=page)
+
+
+@app.route('/streamers')
+def streamers():
+    client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
+    # streamers = client.streams.get_live_streams(limit=5)
+    page = request.args.get('page', 0, type=int)
+    page_size = 5
+    try:
+        streamers = client.streams.get_live_streams(limit=page_size, offset=page * page_size)
+    except:
+        return redirect(request.referrer)
+
+    streamers_list = []
+    for stream in streamers:
+        streams_info = {
+            'streamer_name': stream['channel']['display_name'],
+            'current_game': stream['channel']['game'],
+            'current_viewers': stream['viewers'],
+            'stream_thumbnail': stream['preview']['large'],
+            'stream_url': stream['channel']['url'],
+            'streamer_logo': stream['channel']['logo']
+        }
+        streamers_list.append(streams_info)
+    return render_template('streamers.html', title='Top Streamers', streamers_list=streamers_list, page=page)
+
+# TODO TOP CLIP ROUTES FROM API
+# ---------------------------------------------------------------------------------------------------------------------------

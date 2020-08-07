@@ -1,27 +1,30 @@
-import time
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+import requests
+import json
 
 
 def get_clip_link(link):
     try:
-        url = link
-        options = Options()
-        options.add_argument('--headless')
-        driver = webdriver.Firefox(options=options)
-        driver.get(url)
-        time.sleep(3)
-        page = driver.page_source
-        driver.quit()
-        soup = BeautifulSoup(page, 'html.parser')
-        videos = soup.find_all('video')
+        slug = link.split('/')[-1]
 
-        for video in videos:
-            src = video['src']
-            if src:
-                return src
-            else:
-                return False
+        url = 'https://gql.twitch.tv/gql'
+
+        headers = {
+            'Client-Id': 'kimne78kx3ncx6brgo4mv6wki5h1ko',
+            'Content-Type': 'text/plain;charset=UTF-8',
+            'Origin': 'https://clips.twitch.tv',
+            'Referer': f'https://clips.twitch.tv/{slug}',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
+        }
+
+        payload = [{"operationName": "VideoAccessToken_Clip", "variables": {"slug": slug}, "extensions": {
+            "persistedQuery": {"version": 1, "sha256Hash": "9bfcc0177bffc730bd5a5a89005869d2773480cf1738c592143b5173634b7d15"}}}]
+
+        r = requests.post(url, data=json.dumps(payload[0]), headers=headers)
+        video_url = json.loads(r.text)
+        video_url = video_url['data']['clip']['videoQualities'][0]['sourceURL']
+
+        filename = f"{video_url}"
     except:
-        return False
+        return "Invalid link for clip"
+
+    return filename

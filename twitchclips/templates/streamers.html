@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="streamers-page-container">
+    <h1 class='text-center p-4 display-4'> Current Top Streamers </h1>
+
+    {% for streamer in streamers_list %}
+    <div class="streamers-container d-flex justify-content-center mt-5">
+        <div class="stream-info border border-muted">
+            <div class="stream-texts text-center">
+                <a class='h1' href="{{ streamer.stream_url }}" target="_blank">{{ streamer.streamer_name }} <img class='streamer-logo mb-1' src="{{ streamer.streamer_logo }}"></a>
+
+                <a href="https://www.twitch.tv/directory/game/{{ streamer.current_game }}" target="_blank">
+                    <p class='h2 text-muted'>{{ streamer.current_game|capitalize }} <img id='new-tab' src="../static/images/icons/tabs.svg"></p>
+                </a>
+
+                <p class='text-danger'>{{ streamer.current_viewers }} Current viewers <img class='ml-1' src="../static/images/icons/contacts-16.ico"></p>
+            </div>
+            <a href="{{ streamer.stream_url }}" target="_blank"><img class='img-fluid' src="{{ streamer.stream_thumbnail }}"></a>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <!-- PAGINATION BUTTONS -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center mt-5">
+            <li class="page-item">
+                <a class="page-link" href="/streamers?page={{ page - 1}}" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item w-25 text-center"><a class="page-link" href="">{{ page + 1}}</a></li>
+            <li class="page-item">
+                <a class="page-link" href="/streamers?page={{ page + 1 }}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock content %}

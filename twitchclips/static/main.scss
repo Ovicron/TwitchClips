@@ -32,3 +32,27 @@
 .user-page-name{
     color: rgb(188, 0, 235);
 }
+
+.games-page-container{
+    margin-bottom: 3em;
+}
+
+.game-container{
+    display: inline-block;
+    .game-info{
+        img{
+            width: 240px;
+        }
+        margin-top: 2em;    
+        margin-left: 1.8em;
+    }
+}
+
+.streamer-logo{
+    width: 30px;
+    border-radius: 50%;
+}
+
+#new-tab{
+    width: 18px;
+}

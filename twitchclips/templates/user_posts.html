@@ -16,7 +16,7 @@
             {{ post.date_posted.strftime('%m/%d/%Y - %I:%M %p') }}</p>
         {% if post.link == "NONE" %}
         <div class="vid-container d-flex justify-content-center">
-            <video width="900" height="580" controls>
+            <video width="500" height="300" controls>
                 <source src="{{ post.clip }}" type="video/mp4">
             </video>
         </div>
