@@ -1,12 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
-
 {% for post in posts %}
 <div class="container-fluid text-center post-container">
-    <h1 class='text-primary'> {{ post.title }} </h1>
+    <h2 class='text-primary'> {{ post.title }} </h2>
     <h4>{{ post.body }}</h4>
-    <p class="text-muted">Posted by <a class='text-info'
-            href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a> on
+    <p class="text-muted">Posted by <a class='text-info' href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a> on
         {{ post.date_posted.strftime('%m/%d/%Y - %I:%M %p') }}</p>
     {% if post.link == "NONE" %}
     <div class="vid-container d-flex justify-content-center embed-responsive embed-responsive-16by9">

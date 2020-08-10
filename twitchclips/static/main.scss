@@ -5,7 +5,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Cuprum', sans-serif;
+
 }
+
+// html body{
+//     background-color: #cccccc;
+// }
 
 .container-alert{
     margin-top: 1em;
@@ -33,10 +38,6 @@
     color: rgb(188, 0, 235);
 }
 
-.games-page-container{
-    margin-bottom: 3em;
-}
-
 .game-container{
     display: inline-block;
     .game-info{
@@ -55,4 +56,17 @@
 
 #new-tab{
     width: 18px;
+}
+
+
+.clip-api-thumb{
+    position: relative;
+    border-radius: 8%;
+    width: 266px;
+    height: 155px;
+    filter: brightness(50%);
+
+    &:hover{
+        filter: brightness(100%);
+    }
 }

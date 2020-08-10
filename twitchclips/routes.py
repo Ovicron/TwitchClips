@@ -337,7 +337,7 @@ def games():
 
 @app.route('/streamers')
 def streamers():
-    client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
     page = request.args.get('page', 0, type=int)
     page_size = 5
     try:
@@ -358,5 +358,59 @@ def streamers():
         streamers_list.append(streams_info)
     return render_template('streamers.html', title='Top Streamers', streamers_list=streamers_list, page=page)
 
-# TODO TOP CLIP ROUTES FROM API
+
+@app.route('/clips')
+def clips():
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+
+    # TOP CLIPS API CALLS:
+    clips_day = client.clips.get_top(limit=12, period="day")
+    clips_day_list = []
+    for clip_day in clips_day:
+        clips_info_day = {
+            'clip_url': clip_day['embed_url'],
+            'clip_thumb': clip_day['thumbnails']['medium'],
+            'clip_title': clip_day['title'],
+            'clip_views': clip_day['views'],
+            'clip_category': clip_day['game']
+        }
+        clips_day_list.append(clips_info_day)
+    # WEEK
+    clips_week = client.clips.get_top(limit=12, period="week")
+    clips_week_list = []
+    for clip_week in clips_week:
+        clips_info_week = {
+            'clip_url': clip_week['embed_url'],
+            'clip_thumb': clip_week['thumbnails']['medium'],
+            'clip_title': clip_week['title'],
+            'clip_views': clip_week['views'],
+            'clip_category': clip_week['game']
+        }
+        clips_week_list.append(clips_info_week)
+    # MONTH
+    clips_month = client.clips.get_top(limit=12, period="month")
+    clips_month_list = []
+    for clip_month in clips_month:
+        clips_info_month = {
+            'clip_url': clip_month['embed_url'],
+            'clip_thumb': clip_month['thumbnails']['medium'],
+            'clip_title': clip_month['title'],
+            'clip_views': clip_month['views'],
+            'clip_category': clip_month['game']
+        }
+        clips_month_list.append(clips_info_month)
+    # ALL
+    clips_all = client.clips.get_top(limit=12, period="all")
+    clips_all_list = []
+    for clip_all in clips_all:
+        clips_info_all = {
+            'clip_url': clip_all['embed_url'],
+            'clip_thumb': clip_all['thumbnails']['medium'],
+            'clip_title': clip_all['title'],
+            'clip_views': clip_all['views'],
+            'clip_category': clip_all['game']
+        }
+        clips_all_list.append(clips_info_all)
+    return render_template('clips.html', title='Top Clips', clips_day_list=clips_day_list, clips_week_list=clips_week_list,
+                           clips_month_list=clips_month_list, clips_all_list=clips_all_list)
 # ---------------------------------------------------------------------------------------------------------------------------
