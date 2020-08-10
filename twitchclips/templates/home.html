@@ -2,7 +2,7 @@
 {% block content %}
 {% for post in posts %}
 <div class="container-fluid text-center post-container">
-    <h2 class='text-primary'> {{ post.title }} </h2>
+    <h1 class='text-primary'> {{ post.title }} </h1>
     <h4>{{ post.body }}</h4>
     <p class="text-muted">Posted by <a class='text-info' href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a> on
         {{ post.date_posted.strftime('%m/%d/%Y - %I:%M %p') }}</p>
