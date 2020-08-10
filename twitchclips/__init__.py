@@ -26,4 +26,3 @@ else:
 db = SQLAlchemy(app)
 
 from twitchclips import routes  # nopep8
-from twitchclips.parser import get_clip_link  # nopep8
