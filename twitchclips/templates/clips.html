@@ -7,7 +7,7 @@
     <!-- DAY -->
     <h2 class='p-2 day-title'>Top clips for today</h2>
     {% for day in clips_day_list %}
-    <a href="{{ day.clip_url }}&parent=pogyou.herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ day.clip_thumb }}"></a>
+    <a href="{{ day.clip_url }}&parent=herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ day.clip_thumb }}"></a>
     {% endfor %}
     <div class="d-flex justify-content-center">
         <a href="#" class="btn btn-outline-primary w-50 day-btn load-more-btn">Load More</a>
@@ -17,7 +17,7 @@
     <!-- WEEK -->
     <h2 class='p-2 week-title'>Top clips for the week</h2>
     {% for week in clips_week_list %}
-    <a href="{{ week.clip_url }}&parent=pogyou.herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ week.clip_thumb }}"></a>
+    <a href="{{ week.clip_url }}&parent=herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ week.clip_thumb }}"></a>
     {% endfor %}
     <div class="d-flex justify-content-center">
         <a href="#" class="btn btn-outline-primary w-50 load-more-btn">Load More</a>
@@ -27,7 +27,7 @@
     <!-- MONTH -->
     <h2 class='p-2 month-title'>Top clips for the month</h2>
     {% for month in clips_month_list %}
-    <a href="{{ month.clip_url }}&parent=pogyou.herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ month.clip_thumb }}"></a>
+    <a href="{{ month.clip_url }}&parent=herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ month.clip_thumb }}"></a>
     {% endfor %}
     <div class="d-flex justify-content-center">
         <a href="#" class="btn btn-outline-primary w-50 load-more-btn">Load More</a>
@@ -37,7 +37,7 @@
     <!-- ALL -->
     <h2 class='p-2 month-title'>Top clips of all time</h2>
     {% for all in clips_all_list %}
-    <a href="{{ all.clip_url }}&parent=pogyou.herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ all.clip_thumb }}"></a>
+    <a href="{{ all.clip_url }}&parent=herokuapp.com" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ all.clip_thumb }}"></a>
     {% endfor %}
     <div class="d-flex justify-content-center">
         <a href="#" class="btn btn-outline-primary w-50 load-more-btn">Load More</a>
