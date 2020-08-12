@@ -339,7 +339,7 @@ def games():
 def streamers():
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
     page = request.args.get('page', 0, type=int)
-    page_size = 5
+    page_size = 12
     try:
         streamers = client.streams.get_live_streams(limit=page_size, offset=page * page_size)
     except:

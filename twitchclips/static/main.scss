@@ -38,11 +38,25 @@
     color: rgb(188, 0, 235);
 }
 
+.img-fluid{
+    cursor: pointer;
+}
+
+.vid-player{
+    width: 100%;
+    height: auto;
+}
+
 .game-container{
     display: inline-block;
     .game-info{
         img{
             width: 240px;
+
+            &:hover{
+                transform: scale(1.09);
+                transition: transform 0.2s ease-in;
+            }
         }
         margin-top: 2em;    
         margin-left: 1.8em;
@@ -64,9 +78,12 @@
     border-radius: 8%;
     width: 266px;
     height: 155px;
-    filter: brightness(50%);
+    filter: brightness(75%);
 
     &:hover{
         filter: brightness(100%);
+        transform: scale(1.5);
+        transition: transform 0.2s ease-in;
+        z-index: 1;
     }
 }

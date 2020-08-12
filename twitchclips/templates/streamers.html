@@ -1,38 +1,60 @@
 {% extends 'layout.html' %}
 {% block content %}
-
-<div class="streamers-page-container">
-    <h1 class='text-center p-4 display-4'> Current Top Streamers </h1>
-
+<h1 class='text-center mt-3 display-5'> Current Top Streamers </h1>
+<div class="container-fluid">
     {% for streamer in streamers_list %}
-    <div class="streamers-container d-flex justify-content-center mt-5">
-        <div class="stream-info border border-muted">
-            <div class="stream-texts text-center">
-                <a class='h1' href="{{ streamer.stream_url }}" target="_blank">{{ streamer.streamer_name }} <img class='streamer-logo mb-1' src="{{ streamer.streamer_logo }}"></a>
-
-                <a href="https://www.twitch.tv/directory/game/{{ streamer.current_game }}" target="_blank">
-                    <p class='h2 text-muted'>{{ streamer.current_game|capitalize }} <img id='new-tab' src="../static/images/icons/tabs.svg"></p>
-                </a>
-
-                <p class='text-danger'>{{ streamer.current_viewers }} Current viewers <img class='ml-1' src="../static/images/icons/contacts-16.ico"></p>
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="mr-2">
+                        <a class='h1' href="{{ streamer.stream_url }}" target="_blank">
+                            <img class="rounded-circle" width="45" src="{{ streamer.streamer_logo }}">
+                        </a>
+                    </div>
+                    <div class="ml-2">
+                        <a class='h1' href="{{ streamer.stream_url }}" target="_blank">
+                            <div class="h5 m-0">{{ streamer.streamer_name }}</div>
+                        </a>
+                        <p class='text-danger m-0'>{{ streamer.current_viewers }} Current viewers <img class='ml-1' src="../static/images/icons/contacts-16.ico"></p>
+                    </div>
+                </div>
             </div>
-            <a href="{{ streamer.stream_url }}" target="_blank"><img class='img-fluid' src="{{ streamer.stream_thumbnail }}"></a>
+        </div>
+
+        <div class="card-body">
+            <a href="https://www.twitch.tv/directory/game/{{ streamer.current_game }}" target="_blank">
+                </iframe>
+                <p class='h4 text-info'> <span class="text-dark">Currently Playing:</span> {{ streamer.current_game|capitalize }} <img id='new-tab' src="../static/images/icons/tabs.svg"></p>
+                <a data-lity data-lity-target='https://player.twitch.tv/?channel={{streamer.streamer_name}}&parent=localhost'><img class='img-fluid w-25' src="{{ streamer.stream_thumbnail }}"></a>
+            </a>
         </div>
     </div>
+    <br>
     {% endfor %}
+</div>
 
 
-    <!-- PAGINATION BUTTONS -->
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center mt-5">
-            <li class="page-item">
-                <a class="page-link" href="/streamers?page={{ page - 1}}" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item w-25 text-center"><a class="page-link" href="">{{ page + 1}}</a></li>
-            <li class="page-item">
-                <a class="page-link" href="/streamers?page={{ page + 1 }}">Next</a>
-            </li>
-        </ul>
-    </nav>
+
+<!-- PAGINATION BUTTONS -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center mt-5">
+        <li class="page-item">
+            <a class="page-link" href="/streamers?page={{ page - 1}}" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item w-25 text-center"><a class="page-link" href="">{{ page + 1}}</a></li>
+        <li class="page-item">
+            <a class="page-link" href="/streamers?page={{ page + 1 }}">Next</a>
+        </li>
+    </ul>
+</nav>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+{% endblock scripts %}
