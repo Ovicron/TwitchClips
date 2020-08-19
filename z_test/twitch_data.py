@@ -1,6 +1,6 @@
-from twitch import TwitchClient
-import pprint
-import requests
+# from twitch import TwitchClient
+# import pprint
+# import requests
 
 # def get_top_games():
 #     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
@@ -15,22 +15,22 @@ import requests
 #         return game_info
 
 
-def get_top_streams():
-    client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
-    streamers = client.streams.get_live_streams(limit=2)
+# def get_top_streams():
+#     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
+#     streamers = client.streams.get_live_streams(limit=2)
 
-    for stream in streamers:
-        streams_info = {
-            'streamer_name': stream['channel']['display_name'],
-            'current_game': stream['channel']['game'],
-            'current_viewers': stream['viewers'],
-            'stream_thumbnail': stream['preview']['large'],
-            'stream_url': stream['channel']['url']
-        }
-        pprint.pprint(streamers)
+#     for stream in streamers:
+#         streams_info = {
+#             'streamer_name': stream['channel']['display_name'],
+#             'current_game': stream['channel']['game'],
+#             'current_viewers': stream['viewers'],
+#             'stream_thumbnail': stream['preview']['large'],
+#             'stream_url': stream['channel']['url']
+#         }
+#         pprint.pprint(streamers)
 
 
-get_top_streams()
+# get_top_streams()
 
 
 # client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
