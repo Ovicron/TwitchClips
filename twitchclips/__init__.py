@@ -16,7 +16,7 @@ app.config['TWITCH_CLIENT_ID'] = '95asuy3jl29tye4odxmykelgawgot6'
 
 ENV = 'dev'
 
-if ENV == 'dev':
+if ENV == 'prod':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:booksami@localhost:6000/twitchclips'
 else:
