@@ -1,6 +1,6 @@
 from twitch import TwitchClient
 import pprint
-
+import requests
 
 # def get_top_games():
 #     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
@@ -15,22 +15,22 @@ import pprint
 #         return game_info
 
 
-# def get_top_streams():
-#     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
-#     streamers = client.streams.get_live_streams(limit=2)
+def get_top_streams():
+    client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
+    streamers = client.streams.get_live_streams(limit=2)
 
-#     for stream in streamers:
-#         streams_info = {
-#             'streamer_name': stream['channel']['display_name'],
-#             'current_game': stream['channel']['game'],
-#             'current_viewers': stream['viewers'],
-#             'stream_thumbnail': stream['preview']['large'],
-#             'stream_url': stream['channel']['url']
-#         }
-#         pprint.pprint(streams_info)
+    for stream in streamers:
+        streams_info = {
+            'streamer_name': stream['channel']['display_name'],
+            'current_game': stream['channel']['game'],
+            'current_viewers': stream['viewers'],
+            'stream_thumbnail': stream['preview']['large'],
+            'stream_url': stream['channel']['url']
+        }
+        pprint.pprint(streamers)
 
 
-# get_top_streams()
+get_top_streams()
 
 
 # client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
@@ -85,3 +85,40 @@ import pprint
 #     clips_all_list.append(clips_info_all)
 
 # pprint.pprint(clips_all_list)
+
+# STREAMER VODS
+# client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+# streamers = client.streams.get_live_streams(limit=15)
+
+# for stream in streamers:
+#     streams_info = {
+#         'channel_id': stream['channel']['id'],
+#         'streamer_name': stream['channel']['display_name']
+#     }
+
+#     vods_info = []
+#     streamer_vods = client.channels.get_videos(streams_info['channel_id'], limit=15)
+#     for vods in streamer_vods:
+#         vod_info = {
+#             'vod_streamer_name': vods['channel']['name'],
+#             'preview': vods['preview']['medium'],
+#             'url': vods['url'],
+#             'title': vods['title']
+#         }
+#         if streams_info['streamer_name'] == vod_info['vod_streamer_name']:
+#             vods_info.append(vod_info)
+
+# client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6', 'yonru5pzy6xjbundnwz2cvjeyvxrn0')
+# streamers = client.users.translate_usernames_to_ids('Gaules')
+
+# for streamer in streamers:
+#     streamer_channel_info = {
+#         'first_seen': streamer['created_at'],
+#         'last_seen': streamer['updated_at'],
+#         'streamer_name': streamer['display_name'],
+#         'streamer_bio': streamer['bio'],
+#         'streamer_logo': streamer['logo'],
+#         'streamer_id': streamer['id']
+#     }
+
+#     pprint.pprint(streamer_channel_info)

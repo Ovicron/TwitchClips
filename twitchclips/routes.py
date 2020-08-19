@@ -5,8 +5,8 @@ from flask import render_template, flash, url_for, redirect, request, abort
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
-from twitchclips.parser import get_clip_link
-from twitch import TwitchClient  # Twitch API module
+from twitchclips.parser import get_clip_link  # Clip uploads parser
+from twitch import TwitchClient  # Twitch API
 
 
 @app.route('/')
@@ -17,8 +17,6 @@ def home():
 
 
 # USER REGISTRATION AND LOGIN VIEWS --------------------------------------------------------------------
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -353,7 +351,8 @@ def streamers():
             'current_viewers': stream['viewers'],
             'stream_thumbnail': stream['preview']['large'],
             'stream_url': stream['channel']['url'],
-            'streamer_logo': stream['channel']['logo']
+            'streamer_logo': stream['channel']['logo'],
+            # 'streamer_banner': stream['channel']['profile_banner']
         }
         streamers_list.append(streams_info)
     return render_template('streamers.html', title='Top Streamers', streamers_list=streamers_list, page=page)
@@ -413,4 +412,41 @@ def clips():
         clips_all_list.append(clips_info_all)
     return render_template('clips.html', title='Top Clips', clips_day_list=clips_day_list, clips_week_list=clips_week_list,
                            clips_month_list=clips_month_list, clips_all_list=clips_all_list)
+
+
+@app.template_filter()
+def commaFormat(value):
+    value = int(value)
+    return f"{value:,}"
 # ---------------------------------------------------------------------------------------------------------------------------
+
+
+# STREAMER SPECIFIC ROUTES --------------------------------------------------------------------------------------------------
+@app.route('/streamers/<string:streamer>')
+def streamers_page(streamer):
+    # GRAPHING DATA
+    legend = 'Weekly Viewers'
+    days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+    viewers = [23302, 23302, 23362, 24312, 251111, 28322, 22312]
+
+    # Streamer specific data
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+    users = client.users.translate_usernames_to_ids(streamer)
+
+    streamers_page_list = []
+    for user in users:
+        streamer_channel_info = {
+            'first_seen': user['created_at'],
+            'last_seen': user['updated_at'],
+            'name': user['display_name'],
+            'bio': user['bio'],
+            'logo': user['logo'],
+            'id': user['id']
+        }
+        streamers_page_list.append(streamer_channel_info)
+
+    return render_template('streamers_page.html', title=f'Overview for streamer {streamer}', streamer=streamer,
+                           streamers_page_list=streamers_page_list, viewers=viewers, days=days, legend=legend)
+# -----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# TODO GETS GENERAL STATS - eg; total followers, total views, peak viewers --- ALSO graphs :)

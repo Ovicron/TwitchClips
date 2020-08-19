@@ -35,7 +35,9 @@
 }
 
 .user-page-name{
-    color: rgb(188, 0, 235);
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .img-fluid{
@@ -86,4 +88,35 @@
         transition: transform 0.2s ease-in;
         z-index: 1;
     }
+}
+
+.view-info{
+    margin-top: 7em;
+}
+
+.card-bg{
+    background-color: rgb(226, 226, 226);
+    border: 1px solid rgb(160, 159, 159);
+    .fa-twitch{
+        color: #6441a5;
+    }
+}
+
+.twitch-button{
+    border: 1px #6441a5 solid !important;
+
+    &:hover{
+        color: rgb(255, 255, 255) !important;
+        background-color: #6441a5;
+        
+    }
+}
+
+// .streamer-banner{
+//     width: 150px;
+//     filter: brightness(50%);
+// }
+
+.bg-streamer-page{
+    background-color: rgb(236, 236, 236);
 }

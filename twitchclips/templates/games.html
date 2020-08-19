@@ -8,7 +8,7 @@
     <div class="game-container">
         <div class="game-info">
             <a href="https://www.twitch.tv/directory/game/{{ game.name }}" class='font-weight-bold' target="_blank">{{ game.name }}</a>
-            <p class='text-danger'>{{ game.viewers }} Viewers </p>
+            <p class='text-danger'>{{ game.viewers | commaFormat }} Viewers </p>
             <a href="https://www.twitch.tv/directory/game/{{ game.name }}" target="_blank"><img src="{{ game.thumbnail }}"></a>
         </div>
     </div>

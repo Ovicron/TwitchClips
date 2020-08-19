@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container-fluid gedf-wrapper">
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-7">
             {% for post in posts %}
             <div class="card">
                 <div class="card-header">
@@ -61,16 +61,30 @@
             {% endfor %}
         </div>
 
-        <div class="col-md-3">
+        {% for post in posts %}
+        <div class="col-md-5">
             <div class="card">
-                <div class="card-body bg-dark text-white">
+                <div class="card-body card-bg text-dark">
                     <div class="h4 text-center mb-3"><u>User Statistics</u><img src="https://cdn.frankerfacez.com/emoticon/297232/1" class='ml-2'></div>
-                    <div class="h5">User: <span class='user-page-name'>{{ user.username }}</span></div>
+                    <div class="h5">Username: <span class='user-page-name'>{{ user.username }}</span></div>
                     <div class="h5">Submissions count: <span class='user-page-name'>23</span></div>
                     <div class="h5">Likes Recieved: <span class='user-page-name'>172</span></div>
+                    <div class="d-flex justify-content-around mt-5">
+                        <a href="#" class="fa fa-reddit btn btn-outline-danger fa-2x"></a>
+                        <a href="#" class="fa fa-steam btn btn-outline-primary fa-2x"></a>
+                        <a href="#" class="fa fa-twitch btn twitch-button fa-2x"></a>
+                        <a href="#" class="fa fa-twitter btn btn-outline-info fa-2x"></a>
+                    </div>
+                    <div class='d-flex justify-content-between mt-5'>
+                        {% if post.author == current_user %}
+                        <a href="" class="btn btn-sm btn-outline-primary">Edit Socials</a>
+                        <a href="{{ url_for('settings') }}" class="btn btn-sm btn-outline-success">User Settings</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 

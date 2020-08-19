@@ -58,8 +58,10 @@
                 <div class="card-body">
                     <h4 class="card-title">Submission:</h4>
                     <h6 class="card-subtitle mb-2 text-muted">Submit a twitch clip or a regular post.</h6>
-                    <a href="{{ url_for('submit_clip') }}" class="card-link btn btn-sm btn-info">Submit Clip</a>
-                    <a href="#" class="card-link btn btn-sm btn-primary disabled">Submit Post</a>
+                    <div class="submit-btns d-flex justify-content-around mt-4">
+                        <a href="{{ url_for('submit_clip') }}" class="card-link btn btn-sm btn-info">Submit Clip</a>
+                        <a href="#" class="card-link btn btn-sm btn-primary disabled">Submit Post</a>
+                    </div>
                 </div>
             </div>
             <br>
