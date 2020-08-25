@@ -24,7 +24,7 @@ app.config['SECRET_KEY'] = 'VERYVERYSECRETKEY'
 app.config['TWITCH_CLIENT_ID'] = '9nmje2zw0z52qn0g75wcrbsh1hxwny'
 
 
-ENV = 'prod'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
