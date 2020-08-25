@@ -138,32 +138,32 @@
     Chart.defaults.global.responsive = true;
     // define the chart data
     let chartData = {
-        labels: [{% for label in labels_list %}
-    "{{ label.labels[0] }}",
-        "{{ label.labels[1] }}",
-        "{{ label.labels[2] }}",
-        "{{ label.labels[3] }}",
-        "{{ label.labels[4] }}",
-        "{{ label.labels[5] }}",
-        "{{ label.labels[6] }}"
-    {% endfor %}],
-    datasets: [{
-        label: '{{ legend }}',
-        backgroundColor: '#581b98',
-        hoverBackgroundColor: '#9c1de7',
-        data: [{% for follower in followers_list %}
-        "{{ follower.data[0] }}",
-        "{{ follower.data[1] }}",
-        "{{ follower.data[2] }}",
-        "{{ follower.data[3] }}",
-        "{{ follower.data[4] }}",
-        "{{ follower.data[5] }}",
-        "{{ follower.data[6] }}",
-    {% endfor %}],
-        spanGaps: false
-  }]
+        labels: [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
+        ],
+        datasets: [{
+            label: '{{ legend }}',
+            backgroundColor: '#581b98',
+            hoverBackgroundColor: '#9c1de7',
+            data: [
+                '3423',
+                '3722',
+                '2822',
+                '5933',
+                '7438',
+                '12322',
+                '9382'
+            ],
+            spanGaps: false
+        }]
 
-}
+    }
 
     // get chart canvas
     let ctx = document.getElementById("weeklyFollowers").getContext("2d");

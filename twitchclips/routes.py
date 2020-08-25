@@ -9,7 +9,6 @@ from twitchclips.parser import get_clip_link  # Clip uploads parser
 from twitch import TwitchClient  # Twitch API
 # scraping
 from requests_html import HTMLSession
-import html
 from bs4 import BeautifulSoup
 # caching
 from twitchclips import cache
@@ -470,31 +469,31 @@ def streamers_page(streamer):
     peak_viewers_month.append(p_v_m)
 
     # WEEKLY FOLLOWER GAINS CHART ---------------------------
-    session = HTMLSession()
-    r_sully = session.get(f'https://sullygnome.com/channel/{streamer}')
-    html = r_sully.text
-    soup = BeautifulSoup(html, 'html.parser')
-    id_elem = soup.find('div', {'class': 'InfoPanelCombineHeaderFirst'})
-    split = str(id_elem).split(' ')[6]
-    split_id = str(split).split('\'')[7]
+    # session = HTMLSession()
+    # r_sully = session.get(f'https://sullygnome.com/channel/{streamer}')
+    # html = r_sully.text
+    # soup = BeautifulSoup(html, 'html.parser')
+    # id_elem = soup.find('div', {'class': 'InfoPanelCombineHeaderFirst'})
+    # split = str(id_elem).split(' ')[6]
+    # split_id = str(split).split('\'')[7]
 
-    session = HTMLSession()
-    follower_res = session.get(f'https://sullygnome.com/api/charts/barcharts/getconfig/channelfollowergain/7/{split_id}/streamer/%20/%20/0/0/%20/0/')
-    data = follower_res.json()
+    # session = HTMLSession()
+    # follower_res = session.get(f'https://sullygnome.com/api/charts/barcharts/getconfig/channelfollowergain/7/{split_id}/streamer/%20/%20/0/0/%20/0/')
+    # data = follower_res.json()
 
-    labels_list = []
-    label_data = {
-        'labels': data['data']['labels']
-    }
+    # labels_list = []
+    # label_data = {
+    #     'labels': data['data']['labels']
+    # }
 
-    followers_list = []
-    follower_data = {
-        'data': data['data']['datasets'][0]['data']
-    }
+    # followers_list = []
+    # follower_data = {
+    #     'data': data['data']['datasets'][0]['data']
+    # }
 
-    labels_list.append(label_data)
-    followers_list.append(follower_data)
-    legend = 'Weekly Follower Gain'
+    # labels_list.append(label_data)
+    # followers_list.append(follower_data)
+    # legend = 'Weekly Follower Gain'
     # Streamer specific data ----------------------------
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
 
@@ -527,7 +526,7 @@ def streamers_page(streamer):
 
     stream_status = []
     if users == []:
-        print('No streamer found')
+        pass
     else:
         channel = client.streams.get_stream_by_user(users[0]['id'])
         if channel == None:
@@ -537,8 +536,8 @@ def streamers_page(streamer):
             stream_status.append(live_status)
 
     return render_template('streamers_page.html', title=f'Overview for streamer {streamer}', streamer=streamer, channel_page_list=channel_page_list,
-                           streamers_page_list=streamers_page_list, stream_status=stream_status, labels_list=labels_list, followers_list=followers_list,
+                           streamers_page_list=streamers_page_list, stream_status=stream_status,
                            peak_viewers=peak_viewers, hours_streamed=hours_streamed, avg_viewers=avg_viewers, hrs_watched=hrs_watched,
-                           hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month,
-                           legend=legend)
+                           hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month)
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------
+# TODO HUMANIZE TIME + NEED NEW CHART DATA! collect yourself or yoink!
