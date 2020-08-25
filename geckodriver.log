@@ -1,0 +1,72 @@
+1598310938544	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofilelqiBz1"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598310940259	Marionette	INFO	Listening on port 56456
+1598310940557	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598310940560	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:56446","noProxy":[],"sslProxy":"127.0.0.1:56446"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofilef0Xu8Q"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598311041342	Marionette	INFO	Listening on port 56766
+1598311041638	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598311041640	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:56756","noProxy":[],"sslProxy":"127.0.0.1:56756"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofileQaUhZ3"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598311511208	Marionette	INFO	Listening on port 57600
+1598311511683	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598311511684	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:57586","noProxy":[],"sslProxy":"127.0.0.1:57586"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofilehURsyP"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598311594561	Marionette	INFO	Listening on port 57860
+1598311594680	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598311594682	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:57850","noProxy":[],"sslProxy":"127.0.0.1:57850"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofilenPNqrg"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598311965287	Marionette	INFO	Listening on port 59295
+1598311965333	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598311965334	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:59284","noProxy":[],"sslProxy":"127.0.0.1:59284"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofile3QrrRH"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598312028826	Marionette	INFO	Listening on port 59580
+1598312028935	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598312028937	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:59570","noProxy":[],"sslProxy":"127.0.0.1:59570"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofilez0pEhb"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598312114268	Marionette	INFO	Listening on port 59895
+1598312114614	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598312114615	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:59880","noProxy":[],"sslProxy":"127.0.0.1:59880"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofileoxrz1b"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598312314435	Marionette	INFO	Listening on port 60711
+1598312314489	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598312314491	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:60693","noProxy":[],"sslProxy":"127.0.0.1:60693"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "C:\\Users\\ovicr\\AppData\\Local\\Temp\\rust_mozprofileUo5v8F"
+*** You are running in headless mode.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1598312392683	Marionette	INFO	Listening on port 61044
+1598312392882	Marionette	WARN	TLS certificate errors will be ignored for this session
+1598312392884	Marionette	INFO	Proxy settings initialised: {"proxyType":"manual","httpProxy":"127.0.0.1:61034","noProxy":[],"sslProxy":"127.0.0.1:61034"}
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE

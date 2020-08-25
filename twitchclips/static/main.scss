@@ -120,3 +120,49 @@
 .bg-streamer-page{
     background-color: rgb(236, 236, 236);
 }
+
+.streamer-channel-info{
+    font-size: 19px;
+}
+
+.streamer-page-name{
+    color: #00ffff;
+}
+
+.preview-stream-thumb{
+    width: 25%;
+}
+
+@media only screen and (max-width: 991px){
+    .preview-stream-thumb{
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 575px){
+    .preview-stream-thumb{
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 575px){
+    .preview-stream-thumb{
+        width: 80%;
+    }
+}
+
+.other-card-streamer{
+    margin-top: 7em;
+
+}
+
+.s-title{
+    font-size: 15px;
+}
+.stream-title{
+    font-size: 15px;
+}
+
+.other-card-list{
+    font-size: 13px;
+}

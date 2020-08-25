@@ -26,20 +26,14 @@
             <a href="https://www.twitch.tv/directory/game/{{ streamer.current_game }}" target="_blank">
                 </iframe>
                 <p class='h4 text-info'> <span class="text-dark">Currently Playing:</span> {{ streamer.current_game }} <img id='new-tab' src="../static/images/icons/tabs.svg"></p>
-                <a data-lity data-lity-target='//player.twitch.tv/?channel={{streamer.streamer_name}}&parent=pogyou.herokuapp.com'><img class='preview-stream-thumb'
+                <a data-lity href='https://player.twitch.tv/?channel={{streamer.streamer_name}}&parent=pogyou.herokuapp.com'><img class='preview-stream-thumb'
                         src="{{ streamer.stream_thumbnail }}"></a>
             </a>
-            <p class="float-right view-info">View statstics for <a href="{{ url_for('streamers_page', streamer=streamer.streamer_name) }}">{{ streamer.streamer_name }}</a></p>
+            <p class="float-right view-info">View statstics for <a href="{{ url_for('streamers_page', streamer=streamer.streamer_name) }}">{{ streamer.streamer_name }}</a>
+            </p>
         </div>
     </div>
     <br>
-
-    <!-- gay -->
-    <div class="col-xs-6 col-sm-4 col-md-3 rowless-col">
-        <div class="clip-entity" data-lity data-lity-target="//player.twitch.tv/?channel={{streamer.streamer_name}}&parent=pogyou.herokuapp.com"><img class="clip-thumbnail"
-                src="{{ streamer.stream_thumbnail }}">
-        </div>
-    </div>
     {% endfor %}
 </div>
 
@@ -59,9 +53,3 @@
 </nav>
 </div>
 {% endblock content %}
-
-{% block scripts %}
-<script>
-
-</script>
-{% endblock scripts %}

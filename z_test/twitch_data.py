@@ -1,90 +1,9 @@
-# from twitch import TwitchClient
-# import pprint
-# import requests
-
-# def get_top_games():
-#     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
-#     games = client.games.get_top(limit=2)
-
-#     for game in games:
-#         game_info = {
-#             'name': game['game']['name'],
-#             'viewers': game['viewers'],
-#             'thumbnail': game['game']['box']['large']
-#         }
-#         return game_info
-
-
-# def get_top_streams():
-#     client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
-#     streamers = client.streams.get_live_streams(limit=2)
-
-#     for stream in streamers:
-#         streams_info = {
-#             'streamer_name': stream['channel']['display_name'],
-#             'current_game': stream['channel']['game'],
-#             'current_viewers': stream['viewers'],
-#             'stream_thumbnail': stream['preview']['large'],
-#             'stream_url': stream['channel']['url']
-#         }
-#         pprint.pprint(streamers)
-
-
-# get_top_streams()
-
-
-# client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6')
-
-# clips_day = client.clips.get_top(limit=12, period="day")
-# clips_day_list = []
-# for clip_day in clips_day:
-#     clips_info_day = {
-#         'clip_url': clip_day['embed_url'],
-#         'clip_thumb': clip_day['thumbnails']['medium'],
-#         'clip_title': clip_day['title'],
-#         'clip_views': clip_day['views'],
-#         'clip_category': clip_day['game']
-#     }
-#     clips_day_list.append(clips_info_day)
-
-
-# clips_week = client.clips.get_top(limit=12, period="week")
-# clips_week_list = []
-# for clip_week in clips_week:
-#     clips_info_week = {
-#         'clip_url': clip_week['embed_url'],
-#         'clip_thumb': clip_week['thumbnails']['medium'],
-#         'clip_title': clip_week['title'],
-#         'clip_views': clip_week['views'],
-#         'clip_category': clip_week['game']
-#     }
-#     clips_week_list.append(clips_info_week)
-
-# clips_month = client.clips.get_top(limit=12, period="month")
-# clips_month_list = []
-# for clip_month in clips_month:
-#     clips_info_month = {
-#         'clip_url': clip_month['embed_url'],
-#         'clip_thumb': clip_month['thumbnails']['medium'],
-#         'clip_title': clip_month['title'],
-#         'clip_views': clip_month['views'],
-#         'clip_category': clip_month['game']
-#     }
-#     clips_month_list.append(clips_info_month)
-
-# clips_all = client.clips.get_top(limit=12, period="all")
-# clips_all_list = []
-# for clip_all in clips_all:
-#     clips_info_all = {
-#         'clip_url': clip_all['embed_url'],
-#         'clip_thumb': clip_all['thumbnails']['medium'],
-#         'clip_title': clip_all['title'],
-#         'clip_views': clip_all['views'],
-#         'clip_category': clip_all['game']
-#     }
-#     clips_all_list.append(clips_info_all)
-
-# pprint.pprint(clips_all_list)
+from twitch import TwitchClient
+import pprint
+import requests
+import json
+import os
+import pandas as pd
 
 # STREAMER VODS
 # client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
@@ -108,7 +27,8 @@
 #         if streams_info['streamer_name'] == vod_info['vod_streamer_name']:
 #             vods_info.append(vod_info)
 
-# client = TwitchClient('95asuy3jl29tye4odxmykelgawgot6', 'yonru5pzy6xjbundnwz2cvjeyvxrn0')
+
+# client = TwitchClient('9nmje2zw0z52qn0g75wcrbsh1hxwny', 'yonru5pzy6xjbundnwz2cvjeyvxrn0')
 # streamers = client.users.translate_usernames_to_ids('Gaules')
 
 # for streamer in streamers:
@@ -121,4 +41,57 @@
 #         'streamer_id': streamer['id']
 #     }
 
-#     pprint.pprint(streamer_channel_info)
+#     pprint.pprint(streamers)
+
+
+# token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNWM1Mzg3MDE5NDE2MWY0NmRmZDg3NzA5Iiwicm9sZSI6Im93bmVyIiwiY2hhbm5lbCI6IjVjNTM4NzAxOTQxN\
+#         jFmMGQ1YWQ4NzcwYSIsInByb3ZpZGVyIjoidHdpdGNoIiwiYXV0aFRva2VuIjoiRGlNdGlHU2s2REIxbm94aU9VWEZaOWpJM2UtWVRWVzNoU3BUSlpEX1JHaFA1ajFaIiwiaWF0IjoxN\
+#         Tk3OTYxMzg5LCJpc3MiOiJTdHJlYW1FbGVtZW50cyJ9.yXoL9UuH21jEJOJVZVkVGoMBFFaX32RrFqKflmdTdFA'
+# custom_params = {
+#     'channel_id': '71092938',
+#     'channel_name': 'xqcow',
+#     'my_id': '239485467'
+# }
+# querystring = {
+#     "interval": "2020",
+#     "date": "1597708800",
+#     "tz": "est"
+# }
+
+# headers = {
+#     'accept': 'application/json',
+#     'Authorization': f'Bearer {token}',
+#     'content-type': "application/json"
+# }
+
+
+# url = f"https://api.streamelements.com/kappa/v2/sessions/{custom_params['my_id']}"
+
+# response = requests.get(url, headers=headers, params=querystring).text
+
+# json_data = json.loads(response)
+# json_formatted = json.dumps(json_data, indent=4)
+
+# pprint.pprint(json_formatted)
+
+# grabbing xhr url chart data
+# url = 'https://www.twitchmetrics.net/c/71092938-xqcow/stream_growth_values'
+
+# r = requests.get(url)
+
+# with open('viewers.csv', 'wb') as f:
+#     f.write(r.content)
+
+
+client = TwitchClient('9nmje2zw0z52qn0g75wcrbsh1hxwny', 'usw9kto60ddfap0ec1pxxripykehia')
+channel = client.channels.get()
+
+
+headers = {
+    'accept': 'application/vnd.twitchtv.v5+json',
+    'Client-ID': '9nmje2zw0z52qn0g75wcrbsh1hxwny',
+    'Authorization': 'OAuth usw9kto60ddfap0ec1pxxripykehia'
+}
+r = requests.get('https://api.twitch.tv/kraken/channel', headers=headers).text
+
+pprint.pprint(r)

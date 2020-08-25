@@ -2,21 +2,31 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_caching import Cache
 
 app = Flask(__name__)
 
 bcrypt = Bcrypt(app)
+
+config = {
+    "DEBUG": True,          # some Flask specific configs
+    "CACHE_TYPE": "simple",  # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": 300
+}
+app.config.from_mapping(config)
+cache = Cache(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
 app.config['SECRET_KEY'] = 'VERYVERYSECRETKEY'
-app.config['TWITCH_CLIENT_ID'] = '95asuy3jl29tye4odxmykelgawgot6'
+app.config['TWITCH_CLIENT_ID'] = '9nmje2zw0z52qn0g75wcrbsh1hxwny'
 
-ENV = 'dev'
 
-if ENV == 'prod':
+ENV = 'prod'
+
+if ENV == 'dev':
     app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:booksami@localhost:6000/twitchclips'
 else:

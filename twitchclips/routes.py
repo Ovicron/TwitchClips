@@ -7,6 +7,12 @@ import os
 from werkzeug.utils import secure_filename
 from twitchclips.parser import get_clip_link  # Clip uploads parser
 from twitch import TwitchClient  # Twitch API
+# scraping
+from requests_html import HTMLSession
+import html
+from bs4 import BeautifulSoup
+# caching
+from twitchclips import cache
 
 
 @app.route('/')
@@ -423,16 +429,76 @@ def commaFormat(value):
 
 # STREAMER SPECIFIC ROUTES --------------------------------------------------------------------------------------------------
 @app.route('/streamers/<string:streamer>')
+@cache.cached()
 def streamers_page(streamer):
-    # GRAPHING DATA
-    legend = 'Weekly Viewers'
-    days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
-    viewers = [23302, 23302, 23362, 24312, 251111, 28322, 22312]
+    # ALL TIME STATISTICS -----------------------------
+    session = HTMLSession()
+    r = session.get(f'https://sullygnome.com/channel/{streamer}/365')
 
-    # Streamer specific data
+    peak_viewers_elem = r.html.find('div.InfoStatPanelWrapper:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+    peak_viewers = []
+    p_v = peak_viewers_elem[0].text
+    peak_viewers.append(p_v)
+
+    hours_streamed_elem = r.html.find('div.InfoStatPanelWrapper:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+    hours_streamed = []
+    h_s = hours_streamed_elem[0].text
+    hours_streamed.append(h_s)
+
+    # MONTHLY STATISTICS -----------------------------
+    session = HTMLSession()
+    r = session.get(f'https://sullygnome.com/channel/{streamer}/30')
+
+    avg_viewers_elem = r.html.find('div.InfoStatPanelWrapper:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+    avg_viewers = []
+    a_v = avg_viewers_elem[0].text
+    avg_viewers.append(a_v)
+
+    hrs_watched_elem = r.html.find('div.InfoStatPanelWrapper:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+    hrs_watched = []
+    h_w = hrs_watched_elem[0].text
+    hrs_watched.append(h_w)
+
+    hours_streamed_elem_month = r.html.find('div.InfoStatPanelWrapper:nth-child(6) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+    hours_streamed_month = []
+    h_s_m = hours_streamed_elem_month[0].text
+    hours_streamed_month.append(h_s_m)
+
+    peak_viewers_elem_month = r.html.find('div.InfoStatPanelWrapper:nth-child(5) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)')
+    peak_viewers_month = []
+    p_v_m = peak_viewers_elem_month[0].text
+    peak_viewers_month.append(p_v_m)
+
+    # WEEKLY FOLLOWER GAINS CHART ---------------------------
+    session = HTMLSession()
+    r_sully = session.get(f'https://sullygnome.com/channel/{streamer}')
+    html = r_sully.text
+    soup = BeautifulSoup(html, 'html.parser')
+    id_elem = soup.find('div', {'class': 'InfoPanelCombineHeaderFirst'})
+    split = str(id_elem).split(' ')[6]
+    split_id = str(split).split('\'')[7]
+
+    session = HTMLSession()
+    follower_res = session.get(f'https://sullygnome.com/api/charts/barcharts/getconfig/channelfollowergain/7/{split_id}/streamer/%20/%20/0/0/%20/0/')
+    data = follower_res.json()
+
+    labels_list = []
+    label_data = {
+        'labels': data['data']['labels']
+    }
+
+    followers_list = []
+    follower_data = {
+        'data': data['data']['datasets'][0]['data']
+    }
+
+    labels_list.append(label_data)
+    followers_list.append(follower_data)
+    legend = 'Weekly Follower Gain'
+    # Streamer specific data ----------------------------
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
-    users = client.users.translate_usernames_to_ids(streamer)
 
+    users = client.users.translate_usernames_to_ids(streamer)
     streamers_page_list = []
     for user in users:
         streamer_channel_info = {
@@ -445,8 +511,34 @@ def streamers_page(streamer):
         }
         streamers_page_list.append(streamer_channel_info)
 
-    return render_template('streamers_page.html', title=f'Overview for streamer {streamer}', streamer=streamer,
-                           streamers_page_list=streamers_page_list, viewers=viewers, days=days, legend=legend)
-# -----------------------------------------------------------------------------------------------------------------------------------------------------------
+    channel = client.channels.get_by_id(users[0]['id'])
+    channel_page_list = []
+    channel_info = {
+        'language': channel['broadcaster_language'],
+        'type': channel['broadcaster_type'],
+        'followers': channel['followers'],
+        'views': channel['views'],
+        'current_game': channel['game'],
+        'current_status': channel['status'],
+        'channel_url': channel['url'],
+        'channel_banner': channel['video_banner']
+    }
+    channel_page_list.append(channel_info)
 
-# TODO GETS GENERAL STATS - eg; total followers, total views, peak viewers --- ALSO graphs :)
+    stream_status = []
+    if users == []:
+        print('No streamer found')
+    else:
+        channel = client.streams.get_stream_by_user(users[0]['id'])
+        if channel == None:
+            pass
+        else:
+            live_status = channel['broadcast_platform']
+            stream_status.append(live_status)
+
+    return render_template('streamers_page.html', title=f'Overview for streamer {streamer}', streamer=streamer, channel_page_list=channel_page_list,
+                           streamers_page_list=streamers_page_list, stream_status=stream_status, labels_list=labels_list, followers_list=followers_list,
+                           peak_viewers=peak_viewers, hours_streamed=hours_streamed, avg_viewers=avg_viewers, hrs_watched=hrs_watched,
+                           hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month,
+                           legend=legend)
+# -----------------------------------------------------------------------------------------------------------------------------------------------------------
