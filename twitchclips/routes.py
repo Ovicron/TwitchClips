@@ -1,7 +1,7 @@
 from twitchclips import app, db, bcrypt, login_manager
 from twitchclips.forms import RegisterForm, LoginForm, UpdateAccountForm, PostForm, ClipForm, CommentForm, EditPostForm, EditCommentForm
-from twitchclips.models import User, Post, Comment
-from flask import render_template, flash, url_for, redirect, request, abort
+from twitchclips.models import User, Post, Comment, AverageViewers
+from flask import render_template, flash, url_for, redirect, request, abort, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 import os
 from werkzeug.utils import secure_filename
@@ -10,8 +10,16 @@ from twitch import TwitchClient  # Twitch API
 # scraping
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
+import json
+import random
 # caching
 from twitchclips import cache
+# time
+import humanize
+import datetime as dt
+import time
+# working with data
+import csv
 
 
 @app.route('/')
@@ -303,16 +311,19 @@ def delete_comment(comment_id):
 
 # RATINGS ROUTES ---------------------------------------------------------------------------------------------------
 @login_required
-@app.route('/post/<int:post_id>/<action>', methods=['GET', 'POST'])
+@app.route('/post/<int:post_id>/<action>/', methods=['GET', 'POST'])
 def like_action(post_id, action):
     post = Post.query.filter_by(id=post_id).first_or_404()
     if action == 'Like':
         current_user.like_post(post)
         db.session.commit()
+        flash('Liked Post', 'success')
+        return redirect(url_for('post_page', post_id=post.id))
     if action == 'Dislike':
         current_user.unlike_post(post)
         db.session.commit()
-    return redirect(request.referrer)
+        flash('Disliked Post', 'warning')
+        return redirect(url_for('post_page', post_id=post.id))
 # --------------------------------------------------------------------------------------------------------------------
 
 
@@ -468,32 +479,9 @@ def streamers_page(streamer):
     p_v_m = peak_viewers_elem_month[0].text
     peak_viewers_month.append(p_v_m)
 
-    # WEEKLY FOLLOWER GAINS CHART ---------------------------
-    # session = HTMLSession()
-    # r_sully = session.get(f'https://sullygnome.com/channel/{streamer}')
-    # html = r_sully.text
-    # soup = BeautifulSoup(html, 'html.parser')
-    # id_elem = soup.find('div', {'class': 'InfoPanelCombineHeaderFirst'})
-    # split = str(id_elem).split(' ')[6]
-    # split_id = str(split).split('\'')[7]
+    # GROWTH CHART CHART -------------------------------
+    chart_streamer = AverageViewers.query.filter_by(streamer=streamer.lower()).all()
 
-    # session = HTMLSession()
-    # follower_res = session.get(f'https://sullygnome.com/api/charts/barcharts/getconfig/channelfollowergain/7/{split_id}/streamer/%20/%20/0/0/%20/0/')
-    # data = follower_res.json()
-
-    # labels_list = []
-    # label_data = {
-    #     'labels': data['data']['labels']
-    # }
-
-    # followers_list = []
-    # follower_data = {
-    #     'data': data['data']['datasets'][0]['data']
-    # }
-
-    # labels_list.append(label_data)
-    # followers_list.append(follower_data)
-    # legend = 'Weekly Follower Gain'
     # Streamer specific data ----------------------------
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
 
@@ -508,6 +496,8 @@ def streamers_page(streamer):
             'logo': user['logo'],
             'id': user['id']
         }
+        last_seen_time = streamer_channel_info['last_seen']
+        readable_time = humanize.naturaldelta(last_seen_time - dt.datetime.now())
         streamers_page_list.append(streamer_channel_info)
 
     channel = client.channels.get_by_id(users[0]['id'])
@@ -536,8 +526,7 @@ def streamers_page(streamer):
             stream_status.append(live_status)
 
     return render_template('streamers_page.html', title=f'Overview for streamer {streamer}', streamer=streamer, channel_page_list=channel_page_list,
-                           streamers_page_list=streamers_page_list, stream_status=stream_status,
+                           streamers_page_list=streamers_page_list, stream_status=stream_status, readable_time=readable_time, chart_streamer=chart_streamer,
                            peak_viewers=peak_viewers, hours_streamed=hours_streamed, avg_viewers=avg_viewers, hrs_watched=hrs_watched,
                            hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month)
-# -----------------------------------------------------------------------------------------------------------------------------------------------------------
-# TODO HUMANIZE TIME + NEED NEW CHART DATA! collect yourself or yoink!
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------

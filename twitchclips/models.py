@@ -61,3 +61,13 @@ class PostLike(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete='CASCADE'))
+
+
+class AverageViewers(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    streamer = db.Column(db.String(25), nullable=False)
+    viewers = db.Column(db.Integer, nullable=False)
+    date_snapped = db.Column(db.DateTime(timezone=True), nullable=False)
+
+    def __repr__(self):
+        return f"Data('{self.streamer}', '{self.viewers}', '{self.date_snapped}')"

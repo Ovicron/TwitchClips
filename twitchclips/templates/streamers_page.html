@@ -69,9 +69,8 @@
             </tbody>
         </table>
     </div>
-
-    <div class="col-md-4 mt-5">
-        <div class="card  shadow" style="width: 22rem;">
+    <div class="col-md-4">
+        <div class="card shadow mt-5">
             <div class="card-header">
                 Channel Information
             </div>
@@ -82,24 +81,26 @@
                         <li class="list-group-item">First Seen</li>
                         <li class="list-group-item">Last Seen</li>
                         <li class="list-group-item">Followers</li>
+                    </ul>
                 </div>
                 <div class="col-6">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{ channel.language }}</li>
                         <li class="list-group-item">{{ user.first_seen.strftime('%b %d %Y') }}</li>
-                        <li class="list-group-item">{{ user.last_seen.strftime('%b %d %Y') }}</li>
+                        <li class="list-group-item">{{ readable_time }} ago</li>
                         <li class="list-group-item">{{ channel.followers | commaFormat }}</li>
+                    </ul>
                 </div>
-                </ul>
             </div>
         </div>
     </div>
 </div>
 
+<!-- chart canvas -->
 <div class="row mb-5">
     <div class="col-md-8 mt-5">
         <div class="chart d-flex justify-content center flex-column ">
-            <h3 class='text-center mb-4'>Weekly Followers Gained</h3>
+            <h3 class='text-center mb-4'>Con-current viewers for {{ user.name }}'s stream</h3>
 
             <canvas id="weeklyFollowers" width="600" height="400"></canvas>
         </div>
@@ -120,15 +121,23 @@
                     {% else %}
                     <p class='stream-title'>Streamer is not Partnered &#9785;</p>
                     {% endif %}
+                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".open-stream">Open Stream</button>
                 </blockquote>
             </div>
         </div>
     </div>
 </div>
 {% endfor %}
+<!-- Stream Modal -->
+<!-- <div class="modal fade open-stream" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <iframe class="embed-responsive embed-responsive-16by9" src="https://player.twitch.tv/?channel={{user.name}}&parent=localhost" frameborder="0" width="970" height="530"></iframe>
+        </div>
+    </div>
+</div> -->
 {% endfor %}
 {% endblock content %}
-
 
 <!-------------------------------------------------------- SCRIPTS BELOW-------------------------------------------------------- -->
 {% block scripts %}
@@ -138,43 +147,37 @@
     Chart.defaults.global.responsive = true;
     // define the chart data
     let chartData = {
-        labels: [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-        ],
-        datasets: [{
-            label: '{{ legend }}',
-            backgroundColor: '#581b98',
-            hoverBackgroundColor: '#9c1de7',
-            data: [
-                '3423',
-                '3722',
-                '2822',
-                '5933',
-                '7438',
-                '12322',
-                '9382'
-            ],
-            spanGaps: false
-        }]
-
-    }
-
+        labels: [{% for d in chart_streamer %} "{{ d.date_snapped.strftime('%b %m - %H:%M %p') }}", {% endfor %}],
+    datasets: [{
+        label: '{{ legend }}',
+        fill: 0,
+        backgroundColor: '#581b98',
+        hoverBackgroundColor: '#9c1de7',
+        data: [{% for d in chart_streamer %} "{{ d.viewers }}", {% endfor %}],
+        spanGaps: false,
+            borderColor: '#9c1de7',
+                pointBorderWidth: 3,
+    }]
+ }
     // get chart canvas
     let ctx = document.getElementById("weeklyFollowers").getContext("2d");
 
     // create the chart using the chart canvas
     let myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: chartData,
 
         options: {
             legend: 0,
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        max: 90,
+                        min: 1,
+                        stepSize: 0
+                    }
+                }]
+            }
         }
     });
 </script>

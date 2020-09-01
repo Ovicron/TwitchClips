@@ -7,7 +7,7 @@
     <!-- DAY -->
     <h2 class='p-2 day-title'>Top clips for today</h2>
     {% for day in clips_day_list %}
-    <a href="//clips.twitch.tv/embed?parent=localhost&clip=MuddyPreciousWatermelonNotLikeThis" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ day.clip_thumb }}"></a>
+    <a href="{{ day.clip_url }}&parent=localhost" data-lity><img class='clip-api-thumb ml-2 mb-4' src="{{ day.clip_thumb }}"></a>
     {% endfor %}
     <div class="d-flex justify-content-center">
         <a href="#" class="btn btn-outline-primary w-50 day-btn load-more-btn">Load More</a>
