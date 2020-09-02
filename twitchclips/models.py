@@ -1,5 +1,5 @@
 from twitchclips import db, login_manager
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_login import UserMixin
 
 
@@ -68,6 +68,13 @@ class AverageViewers(db.Model):
     streamer = db.Column(db.String(25), nullable=False)
     viewers = db.Column(db.Integer, nullable=False)
     date_snapped = db.Column(db.DateTime(timezone=True), nullable=False)
+
+    @classmethod
+    def delete_older_than_7_days(cls):
+        expiration_days = 7
+        limit = datetime.utcnow() - timedelta(days=expiration_days)
+        cls.query.filter(cls.date_snapped <= limit).delete()
+        db.session.commit()
 
     def __repr__(self):
         return f"Data('{self.streamer}', '{self.viewers}', '{self.date_snapped}')"

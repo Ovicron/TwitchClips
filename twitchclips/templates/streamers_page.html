@@ -147,7 +147,7 @@
     Chart.defaults.global.responsive = true;
     // define the chart data
     let chartData = {
-        labels: [{% for d in chart_streamer %} "{{ d.date_snapped.strftime('%b %m - %H:%M %p') }}", {% endfor %}],
+        labels: [{% for d in chart_streamer %} "{{ d.date_snapped.strftime('%b %w - %I:%M %p') }}", {% endfor %}],
     datasets: [{
         label: '{{ legend }}',
         fill: 0,
@@ -164,7 +164,7 @@
 
     // create the chart using the chart canvas
     let myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: chartData,
 
         options: {

@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_caching import Cache
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -24,7 +25,7 @@ app.config['SECRET_KEY'] = 'VERYVERYSECRETKEY'
 app.config['TWITCH_CLIENT_ID'] = '9nmje2zw0z52qn0g75wcrbsh1hxwny'
 
 
-ENV = 'test'
+ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
@@ -39,5 +40,7 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://gktfyoeiqavwow:6dd7085870301b2f2f8fff9cd366a9a91ad140279a4f93692a6eccec631a9070@ec2-52-70-15-120.compute-1.amazonaws.com:5432/d30atughl0endi'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+migrate = Migrate(app, db)
 
 from twitchclips import routes  # nopep8

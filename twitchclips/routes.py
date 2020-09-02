@@ -18,8 +18,6 @@ from twitchclips import cache
 import humanize
 import datetime as dt
 import time
-# working with data
-import csv
 
 
 @app.route('/')
@@ -437,7 +435,7 @@ def commaFormat(value):
 # ---------------------------------------------------------------------------------------------------------------------------
 
 
-# STREAMER SPECIFIC ROUTES --------------------------------------------------------------------------------------------------
+# STREAMER SPECIFIC ROUTES DATA/ETC --------------------------------------------------------------------------------------------------
 @app.route('/streamers/<string:streamer>')
 @cache.cached()
 def streamers_page(streamer):
@@ -529,4 +527,13 @@ def streamers_page(streamer):
                            streamers_page_list=streamers_page_list, stream_status=stream_status, readable_time=readable_time, chart_streamer=chart_streamer,
                            peak_viewers=peak_viewers, hours_streamed=hours_streamed, avg_viewers=avg_viewers, hrs_watched=hrs_watched,
                            hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month)
+
+
+@app.route('/delete_7_days_or_older_data')
+def delete_7_days():
+    AverageViewers.delete_older_than_7_days()
+
+    return 'Deleted all data older than 7 days!'
+
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# TODO FIX AUTOMATION VIEWER GRAB AND FIX CHART TIME?

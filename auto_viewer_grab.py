@@ -1,11 +1,9 @@
-import pprint
+from twitchclips import app, db
+from twitchclips.models import AverageViewers, Post
 import schedule
 import time
-import csv
 from twitch import TwitchClient
 from datetime import datetime as dt, timedelta
-from twitchclips import app, db
-from twitchclips.models import AverageViewers
 
 client = TwitchClient(client_id=app.config['TWITCH_CLIENT_ID'])
 streams = client.streams.get_live_streams(limit=100)
@@ -26,20 +24,8 @@ def save_viewers():
         print('SAVED TO DATABASE')
 
 
-schedule.every(15).minutes.do(save_viewers)
+schedule.every(5).seconds.do(save_viewers)
 
 while True:
     schedule.run_pending()
     time.sleep(1)
-
-
-# def delete_7_days():
-#     DAYS = 7
-#     cutoff = (dt.utcnow() - timedelta(days=DAYS))
-#     AverageViewers.query.filter_by(date_snapped <= cutoff).delete()
-#     db.session.commit()
-
-
-# delete_7_days()
-
-# TODO migrate postgres? make sure delete after certain time period, works.
