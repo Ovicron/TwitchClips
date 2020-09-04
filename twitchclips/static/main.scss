@@ -8,6 +8,7 @@
 
 }
 
+
 // html body{
 //     background-color: #cccccc;
 // }
@@ -49,21 +50,91 @@
     height: auto;
 }
 
-.game-container{
-    display: inline-block;
-    .game-info{
-        img{
-            width: 240px;
-
-            &:hover{
-                transform: scale(1.09);
-                transition: transform 0.2s ease-in;
-            }
+// game section ---------------------------------------------------------
+.game-card{
+    margin-bottom: 1.2em;
+    cursor: pointer;
+    a{
+        color: rgb(58, 57, 57);
+        &:hover{
+            text-decoration: none;
+            color: black;
         }
-        margin-top: 2em;    
-        margin-left: 1.8em;
+    }
+    .rank-num-game{
+        margin-top: 1.5em;
+        margin-left: 3em;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .game-name{
+        margin-top: 1.5em;
+    }
+    .game-viewers{
+        margin-top: 1.5em;
+    }
+    .card-body-game{
+        background-color: rgb(241, 241, 241);
     }
 }
+
+.game-img{
+    width: 70px;
+    cursor: pointer;
+}
+
+.game-card:hover{
+    .game-img{
+        transform: scale(1.4);
+        transition: transform 0.3s ease;
+        border: 1px solid rgb(0, 0, 0);
+        z-index: 1;
+    }
+    .card-body-game{
+        border: 1px solid rgb(182, 182, 182)
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .card-body-game{
+        .rank-num-game{
+            margin: 0;
+            text-align: center;
+            background: rgb(197, 197, 197);
+        }
+        .game-img-col{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .game-img{
+                width: 130px;
+                margin-top: 10px;
+            }
+        }
+        .game-name{
+            text-align: center;
+            margin-top: 10px;
+        }
+        .game-viewers{
+            text-align: center;
+            margin-top: 0;
+        }
+    }
+    .game-card{
+        cursor: initial;
+    }
+    .game-card:hover{
+        .game-img{
+            transform: initial;
+            border: none;
+            cursor: pointer;
+        }
+        .card-body-game{
+            border: none;
+        }
+    }
+}
+// ----------------------------------------------- end game css
 
 .streamer-logo{
     width: 30px;

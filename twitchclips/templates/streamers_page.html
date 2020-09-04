@@ -100,7 +100,7 @@
 <div class="row mb-5">
     <div class="col-md-8 mt-5">
         <div class="chart d-flex justify-content center flex-column ">
-            <h3 class='text-center mb-4'>Con-current viewers for {{ user.name }}'s stream</h3>
+            <h3 class='text-center mb-4'>Viewers for {{ user.name }}'s stream</h3>
 
             <canvas id="weeklyFollowers" width="600" height="400"></canvas>
         </div>
@@ -164,7 +164,7 @@
 
     // create the chart using the chart canvas
     let myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: chartData,
 
         options: {

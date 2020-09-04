@@ -536,4 +536,3 @@ def delete_7_days():
     return 'Deleted all data older than 7 days!'
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# TODO FIX AUTOMATION VIEWER GRAB AND FIX CHART TIME?
