@@ -121,21 +121,15 @@
                     {% else %}
                     <p class='stream-title'>Streamer is not Partnered &#9785;</p>
                     {% endif %}
-                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".open-stream">Open Stream</button>
+                    <div data-lity data-lity-target='https://player.twitch.tv/?channel={{user.name}}&parent=localhost'>
+                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".open-stream">Watch Stream</button>
+                    </div>
                 </blockquote>
             </div>
         </div>
     </div>
 </div>
 {% endfor %}
-<!-- Stream Modal -->
-<!-- <div class="modal fade open-stream" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <iframe class="embed-responsive embed-responsive-16by9" src="https://player.twitch.tv/?channel={{user.name}}&parent=localhost" frameborder="0" width="970" height="530"></iframe>
-        </div>
-    </div>
-</div> -->
 {% endfor %}
 {% endblock content %}
 
@@ -147,7 +141,7 @@
     Chart.defaults.global.responsive = true;
     // define the chart data
     let chartData = {
-        labels: [{% for d in chart_streamer %} "{{ d.date_snapped.strftime('%b %w - %I:%M %p') }}", {% endfor %}],
+        labels: [{% for d in chart_streamer %} "{{ d.date_snapped.strftime('%I:%M %p') }}", {% endfor %}],
     datasets: [{
         label: '{{ legend }}',
         fill: 0,
@@ -164,7 +158,7 @@
 
     // create the chart using the chart canvas
     let myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: chartData,
 
         options: {

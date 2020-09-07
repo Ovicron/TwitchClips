@@ -437,7 +437,6 @@ def commaFormat(value):
 
 # STREAMER SPECIFIC ROUTES DATA/ETC --------------------------------------------------------------------------------------------------
 @app.route('/streamers/<string:streamer>')
-@cache.cached()
 def streamers_page(streamer):
     # ALL TIME STATISTICS -----------------------------
     session = HTMLSession()
@@ -532,7 +531,8 @@ def streamers_page(streamer):
 @app.route('/delete_7_days_or_older_data')
 def delete_7_days():
     AverageViewers.delete_older_than_7_days()
-
+    ''''http://localhost:5000/delete_7_days_or_older_data'''
     return 'Deleted all data older than 7 days!'
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# todo games ranks? add streamer specific clips on page...... redesign clips page.... add viewercount to streamers pg.... PogYou user profile picture?

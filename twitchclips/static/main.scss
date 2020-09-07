@@ -50,8 +50,9 @@
     height: auto;
 }
 
-// game section ---------------------------------------------------------
+// game section -------------------------------------------------------------------------------------------------
 .game-card{
+    border: 5px solid black;
     margin-bottom: 1.2em;
     cursor: pointer;
     a{
@@ -75,6 +76,7 @@
     }
     .card-body-game{
         background-color: rgb(241, 241, 241);
+        border: 1px solid rgba(0, 0, 0, 0);
     }
 }
 
@@ -86,8 +88,7 @@
 .game-card:hover{
     .game-img{
         transform: scale(1.4);
-        transition: transform 0.3s ease;
-        border: 1px solid rgb(0, 0, 0);
+        transition: transform 0.2s ease;
         z-index: 1;
     }
     .card-body-game{
@@ -134,8 +135,25 @@
         }
     }
 }
-// ----------------------------------------------- end game css
+// ----------------------------------------------------------------------------------------------------------- end game css
 
+// streamers browse -------------------------------------------------------------------------------------------------------
+.browse-streamers-thumbnail{
+    border-radius: 5px;
+}
+
+.twitch-text-logo{
+    width: 45px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 992px){
+    .twitch-text-logo{
+        display: none;
+    }
+}
+
+// -------------------------------------------------------------------------------------------- end streamers browse css
 .streamer-logo{
     width: 30px;
     border-radius: 50%;
