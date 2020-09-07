@@ -154,6 +154,19 @@
 }
 
 // -------------------------------------------------------------------------------------------- end streamers browse css
+.s-pg-img{
+    border: 1px solid rgb(104, 104, 104);
+    filter: brightness(70%);
+    &:hover{
+        filter: brightness(100%);
+        transition: filter 0.3s ease;
+    }
+    cursor: pointer;
+}
+// streamers page  -------------------------------------------------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------------------------------- end streamers page css
 .streamer-logo{
     width: 30px;
     border-radius: 50%;

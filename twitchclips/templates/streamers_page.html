@@ -95,7 +95,7 @@
         </div>
     </div>
 </div>
-
+<hr>
 <!-- chart canvas -->
 <div class="row mb-5">
     <div class="col-md-8 mt-5">
@@ -131,6 +131,33 @@
 </div>
 {% endfor %}
 {% endfor %}
+<hr>
+<!-- streamer clips -->
+<div class="card mb-3">
+    <div class="card-header d-flex">
+        <h4>Top {{ streamer }} clips</h4>
+        <a class="btn btn-md btn-outline-info ml-auto" href="#">More Clips</a>
+    </div>
+    <div class="card-body px-5">
+        <div class="d-flex flex-wrap align-content-around justify-content-start">
+            {% for clip in channel_clips_list %}
+            <div class="px-2 pb-2 col-6 col-sm-6 col-md-6 col-lg-3">
+                <div class='s-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=localhost'>
+                    <img src="{{ clip.clip_thumb }}" class='img-fluid s-pg-img'>
+                </div>
+                <div class="text-muted mt-1">
+                    <div>
+                        <a class="text-muted" href="{{ clip.url }}" target="_blank">{{ clip.name }}</a>
+                        -
+                        <a class="text-muted" href="https://www.twitch.tv/directory/{{ clip.clip_game }}" target="_blank">{{ clip.clip_game }}</a>
+                    </div>
+                    <div>{{ clip.clip_views | commaFormat }} views </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
 <!-------------------------------------------------------- SCRIPTS BELOW-------------------------------------------------------- -->

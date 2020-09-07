@@ -522,10 +522,24 @@ def streamers_page(streamer):
             live_status = channel['broadcast_platform']
             stream_status.append(live_status)
 
+    # STREAMER CLIPS -----------------------------------
+    channel_clips = client.clips.get_top(f'{streamer}', limit=4, period='all')
+    channel_clips_list = []
+    for clip in channel_clips:
+        clips_info = {
+            'name': clip['broadcaster']['display_name'],
+            'url': clip['broadcaster']['channel_url'],
+            'clip_url': clip['embed_url'],
+            'clip_game': clip['game'],
+            'clip_views': clip['views'],
+            'clip_thumb': clip['thumbnails']['small']
+        }
+        channel_clips_list.append(clips_info)
+
     return render_template('streamers_page.html', title=f'Overview for streamer {streamer}', streamer=streamer, channel_page_list=channel_page_list,
                            streamers_page_list=streamers_page_list, stream_status=stream_status, readable_time=readable_time, chart_streamer=chart_streamer,
                            peak_viewers=peak_viewers, hours_streamed=hours_streamed, avg_viewers=avg_viewers, hrs_watched=hrs_watched,
-                           hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month)
+                           hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month, channel_clips_list=channel_clips_list)
 
 
 @app.route('/delete_7_days_or_older_data')
@@ -535,4 +549,4 @@ def delete_7_days():
     return 'Deleted all data older than 7 days!'
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# todo games ranks? add streamer specific clips on page...... redesign clips page.... add viewercount to streamers pg.... PogYou user profile picture?
+# todo games ranks?...... redesign clips page.... add viewercount to streamers pg.... PogYou user profile picture?..... streamer CLIPS PAGE for all RELATED CLIPS (week/month etc)
