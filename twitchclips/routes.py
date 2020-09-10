@@ -325,16 +325,34 @@ def like_action(post_id, action):
 # --------------------------------------------------------------------------------------------------------------------
 
 
+# ERROR HANDLER ROUTES --------------------------------------------------------------------------------------------------
+@app.errorhandler(404)
+def error_404(e):
+    return render_template('error_templates/404.html', title='Not Found 404')
+
+
+@app.errorhandler(403)
+def error_403(e):
+    return render_template('error_templates/403.html', title='Forbidden 403')
+
+
+@app.errorhandler(500)
+def error_500(e):
+    return render_template('error_templates/500.html', title='Internal Server Error 500')
+# ------------------------------------------------------------------------------------------------------------------------
+
+
 # TWITCH API ROUTES ---------------------------------------------------------------------------------------------------
 @app.route('/games')
 def games():
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
     page = request.args.get('page', 0, type=int)
-    page_size = 16
+    page_size = 20
     try:
         games = client.games.get_top(limit=page_size, offset=page * page_size)
     except:
         return redirect(request.referrer)
+    # games = client.games.get_top(limit=20)
 
     games_list = []
     for game in games:
@@ -519,7 +537,10 @@ def streamers_page(streamer):
         if channel == None:
             pass
         else:
-            live_status = channel['broadcast_platform']
+            live_status = {
+                "status": channel['broadcast_platform'],
+                "viewers": channel['viewers']
+            }
             stream_status.append(live_status)
 
     # STREAMER CLIPS -----------------------------------
@@ -542,11 +563,108 @@ def streamers_page(streamer):
                            hours_streamed_month=hours_streamed_month, peak_viewers_month=peak_viewers_month, channel_clips_list=channel_clips_list)
 
 
+# DELETES CHART DATA OLDER THAN 7 DAYS.
 @app.route('/delete_7_days_or_older_data')
 def delete_7_days():
     AverageViewers.delete_older_than_7_days()
     ''''http://localhost:5000/delete_7_days_or_older_data'''
     return 'Deleted all data older than 7 days!'
-
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# todo games ranks?...... redesign clips page.... add viewercount to streamers pg.... PogYou user profile picture?..... streamer CLIPS PAGE for all RELATED CLIPS (week/month etc)
+
+
+# STREAMER SPECIFIC CLIPS -----------------------------------------------------------------------------------------------------------------------------------------
+@app.route('/streamer/<string:streamer>/clips')
+def more_clips(streamer):
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+
+    # clips ------------------------------------
+    clips = client.clips.get_top(f'{streamer}', limit=100, period='all')
+    clips_list = []
+    for clip in clips:
+        clips_info = {
+            'url': clip['broadcaster']['channel_url'],
+            'clip_url': clip['embed_url'],
+            'game': clip['game'],
+            'views': clip['views'],
+            'thumb': clip['thumbnails']['small'],
+            'title': clip['title'],
+        }
+        clips_list.append(clips_info)
+
+    # streamer logo -----------------------------
+    users = client.users.translate_usernames_to_ids(streamer)
+    logo = users[0]['logo']
+
+    return render_template('streamer_clips_templates/more_clips.html', title=f"{streamer}'s Clips", streamer=streamer, logo=logo, clips_list=clips_list)
+
+
+@app.route('/streamer/<string:streamer>/clips/monthly')
+def monthly_streamer_clips(streamer):
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+
+    # clips month------------------------------------
+    clips = client.clips.get_top(f'{streamer}', limit=100, period='month')
+    clips_list = []
+    for clip in clips:
+        clips_info = {
+            'url': clip['broadcaster']['channel_url'],
+            'clip_url': clip['embed_url'],
+            'game': clip['game'],
+            'views': clip['views'],
+            'thumb': clip['thumbnails']['small'],
+            'title': clip['title'],
+        }
+        clips_list.append(clips_info)
+
+    # streamer logo -----------------------------
+    users = client.users.translate_usernames_to_ids(streamer)
+    logo = users[0]['logo']
+    return render_template('streamer_clips_templates/monthly.html', title=f"{streamer}'s Clips", streamer=streamer, logo=logo, clips_list=clips_list)
+
+
+@app.route('/streamer/<string:streamer>/clips/weekly')
+def weekly_streamer_clips(streamer):
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+
+    # clips week------------------------------------
+    clips = client.clips.get_top(f'{streamer}', limit=100, period='week')
+    clips_list = []
+    for clip in clips:
+        clips_info = {
+            'url': clip['broadcaster']['channel_url'],
+            'clip_url': clip['embed_url'],
+            'game': clip['game'],
+            'views': clip['views'],
+            'thumb': clip['thumbnails']['small'],
+            'title': clip['title'],
+        }
+        clips_list.append(clips_info)
+
+    users = client.users.translate_usernames_to_ids(streamer)
+    logo = users[0]['logo']
+    return render_template('streamer_clips_templates/weekly.html', title=f"{streamer}'s Clips", streamer=streamer, logo=logo, clips_list=clips_list)
+
+
+@app.route('/streamer/<string:streamer>/clips/daily')
+def daily_streamer_clips(streamer):
+    client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
+
+    # clips daily------------------------------------
+    clips = client.clips.get_top(f'{streamer}', limit=100, period='day')
+    clips_list = []
+    for clip in clips:
+        clips_info = {
+            'url': clip['broadcaster']['channel_url'],
+            'clip_url': clip['embed_url'],
+            'game': clip['game'],
+            'views': clip['views'],
+            'thumb': clip['thumbnails']['small'],
+            'title': clip['title'],
+        }
+        clips_list.append(clips_info)
+
+    users = client.users.translate_usernames_to_ids(streamer)
+    logo = users[0]['logo']
+    return render_template('streamer_clips_templates/daily.html', title=f"{streamer}'s Clips", streamer=streamer, logo=logo, clips_list=clips_list)
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# todo paginated ranks...... redesign clips page.......

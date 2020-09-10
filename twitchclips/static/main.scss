@@ -65,7 +65,7 @@
     .rank-num-game{
         margin-top: 1.5em;
         margin-left: 3em;
-        font-size: 22px;
+        font-size: 19px;
         font-weight: bold;
     }
     .game-name{
@@ -93,6 +93,20 @@
     }
     .card-body-game{
         border: 1px solid rgb(182, 182, 182)
+    }
+}
+
+.game-heads{
+    display: flex;
+    justify-content: space-between;
+    .r-head{
+        margin-left: 2em;
+    }
+    .g-head{
+        margin-left: 10em;
+    }
+    .v-head{
+        margin-right: 6em;
     }
 }
 
@@ -134,6 +148,24 @@
             border: none;
         }
     }
+    .game-heads{
+        display: none;
+    }
+}
+@media only screen and (max-width: 1199px){
+    .game-heads{
+        h4{
+            font-size: 20px;
+        }
+    }
+}
+
+@media only screen and (max-width: 991px){
+    .game-heads{
+        h4{
+            font-size: 14px;
+        }
+    }
 }
 // ----------------------------------------------------------------------------------------------------------- end game css
 
@@ -154,19 +186,51 @@
 }
 
 // -------------------------------------------------------------------------------------------- end streamers browse css
+
+// ############ Streamers preview 4 CLIPS ############## //
 .s-pg-img{
     border: 1px solid rgb(104, 104, 104);
-    filter: brightness(70%);
+    filter: brightness(60%);
     &:hover{
         filter: brightness(100%);
         transition: filter 0.3s ease;
     }
     cursor: pointer;
 }
-// streamers page  -------------------------------------------------------------------------------------------------------
 
+// streamers clips page  -------------------------------------------------------------------------------------------------------
+.clips-pg-img{
+    border: 1px solid rgb(141, 141, 141);
+    filter: brightness(60%);
+    &:hover{
+        filter: brightness(100%);
+        transition: filter 0.3s ease;
+    }
+    cursor: pointer;
+}
 
-// ------------------------------------------------------------------------------------------------- end streamers page css
+.clip-meta{
+    position: absolute;
+    top: 0;
+    color: white;
+}
+
+.clips-pg-clips:hover{
+    .clip-meta{
+        display: none;
+    }
+}
+
+.btn-clips-sort{
+    background-color: rgb(252, 252, 252) !important;
+    border: 1px solid rgb(162, 28, 252) !important;
+    color: rgb(0, 0, 0) !important;
+    &:hover{
+        background-color: rgb(162, 28, 252) !important;
+        color: rgb(255, 255, 255) !important;
+    }
+}
+// ------------------------------------------------------------------------------------------------- end streamers clips page css
 .streamer-logo{
     width: 30px;
     border-radius: 50%;

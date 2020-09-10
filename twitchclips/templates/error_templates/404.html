@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="error-texts text-center mt-5">
+    <div class="display-1">Page Not Found</div>
+    <h3>The page you requested has been deleted, modified or never existed.</h3>
+    <i class="fa fa-exclamation-triangle fa-5x p-2"></i>
+    <div class="display-4">(Error 404)</div>
+    <a class="btn btn-dark btn-lg mt-5" href="{{ url_for('home') }}">Go Back To Home Page</a>
+</div>
+{% endblock content %}

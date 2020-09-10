@@ -28,15 +28,12 @@ app.config['TWITCH_CLIENT_ID'] = '9nmje2zw0z52qn0g75wcrbsh1hxwny'
 ENV = 'dev'
 
 if ENV == 'dev':
-    app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:booksami@localhost:6000/twitchclips'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 elif ENV == 'test':
-    app.debug = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
-    app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://gktfyoeiqavwow:6dd7085870301b2f2f8fff9cd366a9a91ad140279a4f93692a6eccec631a9070@ec2-52-70-15-120.compute-1.amazonaws.com:5432/d30atughl0endi'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)

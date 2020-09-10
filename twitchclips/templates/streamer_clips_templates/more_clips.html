@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="display-4 text-center p-3">Showing Clips for <a href="{{ url_for('streamers_page', streamer=streamer) }}">{{ streamer }}</a>
+    <span><img src="{{ logo }}" width="75" class='rounded-circle'></span>
+</div>
+
+<div class="dropdown float-right">
+    <button class="btn btn-clips-sort btn-md dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort Clips
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item active" href="{{ url_for('more_clips', streamer=streamer) }}">All Time</a>
+        <a class="dropdown-item" href="{{ url_for('monthly_streamer_clips', streamer=streamer) }}">Monthly</a>
+        <a class="dropdown-item" href="{{ url_for('weekly_streamer_clips', streamer=streamer) }}">Weekly</a>
+        <a class="dropdown-item" href="{{ url_for('daily_streamer_clips', streamer=streamer) }}">Daily</a>
+    </div>
+</div>
+
+</div>
+<div class="row mt-3">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4> {{ streamer }}'s Top Clips of All Time </h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap align-content-around justify-content-start">
+                    {% for clip in clips_list %}
+                    <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
+                        <div class='clips-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=localhost'>
+                            <img src="{{ clip.thumb }}" class='img-fluid clips-pg-img' onerror="imageError(this)">
+
+                            <div class="clip-meta m-2">{{ clip.title }}</div>
+                        </div>
+                        <div class="text-muted mt-1">
+                            <div>
+                                <a class="text-muted" href="https://www.twitch.tv/directory/{{ clip.game }}" target="_blank">{{ clip.game }}</a>
+                            </div>
+                            <div>{{ clip.views | commaFormat }} views </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    function imageError(image) {
+        image.onerror = "";
+        image.src = 'https://i.imgur.com/zHTkvYa.png'
+        return true
+    }
+</script>
+{% endblock scripts %}

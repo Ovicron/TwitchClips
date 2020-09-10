@@ -19,7 +19,11 @@
         <p class='text-center'>Current Status: <span class='text-warning'>Offline</span></p>
         {% else %}
         <p class='text-center'>Current Game: <span class='text-danger'>{{ channel.current_game }}</span></p>
-        <p class='text-center'>Current Status: <span class='text-danger'>{{ stream_status[0] | capitalize }}</span> <span class="fa fa-circle text-danger"></span></p>
+        <p class='text-center'>Current Status: <span class='text-danger'>{{ stream_status[0]['status'] | capitalize }}</span> <span class="fa fa-circle text-danger"></span></p>
+        <p class='text-center'>
+            Viewers: <span class='text-danger'>{{ stream_status[0]['viewers'] | commaFormat }}</span>
+            <span><img class='mb-1' src="../static/images/icons/contacts-16.ico"></span>
+        </p>
         {% endif %}
     </div>
 </div>
@@ -135,15 +139,15 @@
 <!-- streamer clips -->
 <div class="card mb-3">
     <div class="card-header d-flex">
-        <h4>Top {{ streamer }} clips</h4>
-        <a class="btn btn-md btn-outline-info ml-auto" href="#">More Clips</a>
+        <h4>Top {{ streamer }}'s clips</h4>
+        <a class="btn btn-md btn-outline-info ml-auto" href="{{ url_for('more_clips', streamer=streamer) }}">More Clips</a>
     </div>
     <div class="card-body px-5">
         <div class="d-flex flex-wrap align-content-around justify-content-start">
             {% for clip in channel_clips_list %}
             <div class="px-2 pb-2 col-6 col-sm-6 col-md-6 col-lg-3">
                 <div class='s-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=localhost'>
-                    <img src="{{ clip.clip_thumb }}" class='img-fluid s-pg-img'>
+                    <img src="{{ clip.clip_thumb }}" class='img-fluid s-pg-img' onerror="imageError(this)">
                 </div>
                 <div class="text-muted mt-1">
                     <div>
@@ -162,6 +166,7 @@
 
 <!-------------------------------------------------------- SCRIPTS BELOW-------------------------------------------------------- -->
 {% block scripts %}
+<script src="../static/Chart.min.js"></script>
 <script>
     // Global parameters:
     // do not resize the chart canvas when its container does (keep at 600x400px)
@@ -201,5 +206,13 @@
             }
         }
     });
+</script>
+
+<script>
+    function imageError(image) {
+        image.onerror = "";
+        image.src = '../static/images/icons/peepoSad.jpg'
+        return true
+    }
 </script>
 {% endblock scripts %}

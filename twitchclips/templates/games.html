@@ -3,7 +3,11 @@
 
 <div class="games-page-container">
     <h1 class='text-center p-4 display-5'> Current Top Games </h1>
-
+    <div class="game-heads">
+        <h4 class="r-head">Rank</h4>
+        <h4 class="g-head">Game</h4>
+        <h4 class="v-head">Live Viewers</h4>
+    </div>
     {% for game in games_list %}
     <div class="row">
         <div class="col-md-12">
@@ -12,7 +16,7 @@
                     <div class="card-body card-body-game p-0">
                         <div class="row">
                             <div class="col-md-2">
-                                <p class="rank-num-game">#1</p>
+                                <p class="rank-num-game">#{{ loop.index }}</p>
                             </div>
                             <div class="col-md-4 game-img-col">
                                 <img src="{{ game.thumbnail }}" class='game-img'>
