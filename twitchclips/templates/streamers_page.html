@@ -125,7 +125,7 @@
                     {% else %}
                     <p class='stream-title'>Streamer is not Partnered &#9785;</p>
                     {% endif %}
-                    <div data-lity data-lity-target='https://player.twitch.tv/?channel={{user.name}}&parent=localhost'>
+                    <div data-lity data-lity-target='https://player.twitch.tv/?channel={{user.name}}&parent=pogyou.herokuapp.com'>
                         <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".open-stream">Watch Stream</button>
                     </div>
                 </blockquote>
@@ -146,7 +146,7 @@
         <div class="d-flex flex-wrap align-content-around justify-content-start">
             {% for clip in channel_clips_list %}
             <div class="px-2 pb-2 col-6 col-sm-6 col-md-6 col-lg-3">
-                <div class='s-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=localhost'>
+                <div class='s-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=pogyou.herokuapp.com'>
                     <img src="{{ clip.clip_thumb }}" class='img-fluid s-pg-img' onerror="imageError(this)">
                 </div>
                 <div class="text-muted mt-1">

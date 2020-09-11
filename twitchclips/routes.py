@@ -567,7 +567,7 @@ def streamers_page(streamer):
 @app.route('/delete_7_days_or_older_data')
 def delete_7_days():
     AverageViewers.delete_older_than_7_days()
-    ''''http://localhost:5000/delete_7_days_or_older_data'''
+    ''''http://:5000/delete_7_days_or_older_data'''
     return 'Deleted all data older than 7 days!'
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -667,4 +667,4 @@ def daily_streamer_clips(streamer):
     logo = users[0]['logo']
     return render_template('streamer_clips_templates/daily.html', title=f"{streamer}'s Clips", streamer=streamer, logo=logo, clips_list=clips_list)
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# todo paginated ranks...... redesign clips page.......
+# todo paginated ranks...... redesign clips page....... user social links forms........update passwords for users...... some form of search functionality

@@ -27,7 +27,7 @@
                 <div class="d-flex flex-wrap align-content-around justify-content-start">
                     {% for clip in clips_list %}
                     <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                        <div class='clips-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=localhost'>
+                        <div class='clips-pg-clips' data-lity data-lity-target='{{ clip.clip_url }}&parent=pogyou.herokuapp.com'>
                             <img src="{{ clip.thumb }}" class='img-fluid clips-pg-img' onerror="imageError(this)">
 
                             <div class="clip-meta m-2">{{ clip.title }}</div>

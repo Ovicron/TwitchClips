@@ -25,7 +25,7 @@ app.config['SECRET_KEY'] = 'VERYVERYSECRETKEY'
 app.config['TWITCH_CLIENT_ID'] = '9nmje2zw0z52qn0g75wcrbsh1hxwny'
 
 
-ENV = 'dev'
+ENV = 'prod'
 
 if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:booksami@localhost:6000/twitchclips'
