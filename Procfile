@@ -1,1 +1,2 @@
-web: gunicorn app:app clock: python auto_viewer_grab.py
+web: gunicorn app:app 
+clock: python auto_viewer_grab.py
