@@ -12,7 +12,7 @@
             <div class="d-flex flex-wrap align-content-around justify-content-start">
                 {% for day in clips_day_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=localhost'>
                         <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
 
                         <div class="clip-meta m-2">{{ day.clip_title }}</div>
@@ -20,7 +20,8 @@
                     <div class="text-muted mt-1">
                         <div>
                             <span>
-                                <a class="text-muted" href="https://www.twitch.tv/{{ day.clip_streamer }}" target="_blank">{{ day.clip_streamer }} </a> -
+                                <a class="text-muted" href="https://www.twitch.tv/{{ day.clip_streamer }}" target="_blank">{{ day.clip_streamer }}</a>
+                                -
                                 <a class="text-muted" href="https://www.twitch.tv/directory/{{ day.clip_game }}" target="_blank">{{ day.clip_game }}</a>
                             </span>
                             <div>{{ day.clip_views | commaFormat }} views</div>
@@ -43,7 +44,7 @@
             <div class="d-flex flex-wrap align-content-around justify-content-start">
                 {% for day in clips_week_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=localhost'>
                         <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
 
                         <div class="clip-meta m-2">{{ day.clip_title }}</div>
@@ -74,7 +75,7 @@
             <div class="d-flex flex-wrap align-content-around justify-content-start">
                 {% for day in clips_month_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=localhost'>
                         <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
 
                         <div class="clip-meta m-2">{{ day.clip_title }}</div>
@@ -105,7 +106,7 @@
             <div class="d-flex flex-wrap align-content-around justify-content-start">
                 {% for day in clips_all_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=localhost'>
                         <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
 
                         <div class="clip-meta m-2">{{ day.clip_title }}</div>
