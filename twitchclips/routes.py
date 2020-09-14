@@ -671,4 +671,4 @@ def daily_streamer_clips(streamer):
     logo = users[0]['logo']
     return render_template('streamer_clips_templates/daily.html', title=f"{streamer}'s Clips", streamer=streamer, logo=logo, clips_list=clips_list)
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# todo paginated ranks.........update passwords for users...... some form of search functionality
+# todo paginated ranks.........update passwords for users...... some form of search functionality... games page streamers
