@@ -12,7 +12,7 @@
             <div class="d-flex flex-wrap align-content-around justify-content-start">
                 {% for day in clips_day_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&pogyou.herokuapp.com'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
                         <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
 
                         <div class="clip-meta m-2">{{ day.clip_title }}</div>
@@ -37,7 +37,7 @@
 
         <div class="week">
             <div class="p-2">
-                <h4> Top Clips Weekly </h4>
+                <h4> Top Clips Weekly</h4>
             </div>
             <div class="d-flex flex-wrap align-content-around justify-content-start">
                 {% for week in clips_week_list %}
