@@ -40,20 +40,20 @@
                 <h4> Top Clips Weekly </h4>
             </div>
             <div class="d-flex flex-wrap align-content-around justify-content-start">
-                {% for day in clips_week_list %}
+                {% for week in clips_week_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
-                        <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ week.clip_url }}&parent=pogyou.herokuapp.com'>
+                        <img src="{{ week.clip_thumb }}" class='img-fluid clips-pg-img'>
 
-                        <div class="clip-meta m-2">{{ day.clip_title }}</div>
+                        <div class="clip-meta m-2">{{ week.clip_title }}</div>
                     </div>
                     <div class="text-muted mt-1">
                         <div>
-                            <a class="text-muted" href="https://www.twitch.tv/{{ day.clip_streamer }}" target="_blank">{{ day.clip_streamer }}</a>
+                            <a class="text-muted" href="https://www.twitch.tv/{{ week.clip_streamer }}" target="_blank">{{ week.clip_streamer }}</a>
                             -
-                            <a class="text-muted" href="https://www.twitch.tv/directory/{{ day.clip_game }}" target="_blank">{{ day.clip_game }}</a>
+                            <a class="text-muted" href="https://www.twitch.tv/directory/{{ week.clip_game }}" target="_blank">{{ week.clip_game }}</a>
                         </div>
-                        <div>{{ day.clip_views | commaFormat }} views</div>
+                        <div>{{ week.clip_views | commaFormat }} views</div>
                     </div>
                 </div>
                 {% endfor %}
@@ -70,20 +70,20 @@
                 <h4> Top Clips Monthly </h4>
             </div>
             <div class="d-flex flex-wrap align-content-around justify-content-start">
-                {% for day in clips_month_list %}
+                {% for month in clips_month_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
-                        <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ month.clip_url }}&parent=pogyou.herokuapp.com'>
+                        <img src="{{ month.clip_thumb }}" class='img-fluid clips-pg-img'>
 
-                        <div class="clip-meta m-2">{{ day.clip_title }}</div>
+                        <div class="clip-meta m-2">{{ month.clip_title }}</div>
                     </div>
                     <div class="text-muted mt-1">
                         <div>
-                            <a class="text-muted" href="https://www.twitch.tv/{{ day.clip_streamer }}" target="_blank">{{ day.clip_streamer }}</a>
+                            <a class="text-muted" href="https://www.twitch.tv/{{ month.clip_streamer }}" target="_blank">{{ month.clip_streamer }}</a>
                             -
-                            <a class="text-muted" href="https://www.twitch.tv/directory/{{ day.clip_game }}" target="_blank">{{ day.clip_game }}</a>
+                            <a class="text-muted" href="https://www.twitch.tv/directory/{{ month.clip_game }}" target="_blank">{{ month.clip_game }}</a>
                         </div>
-                        <div>{{ day.clip_views | commaFormat }} views</div>
+                        <div>{{ month.clip_views | commaFormat }} views</div>
                     </div>
                 </div>
                 {% endfor %}
@@ -95,25 +95,25 @@
 
         <hr>
 
-        <div class="month">
+        <div class="all">
             <div class="p-2">
-                <h4> Top Clips Monthly </h4>
+                <h4> Top Clips of All Time </h4>
             </div>
             <div class="d-flex flex-wrap align-content-around justify-content-start">
-                {% for day in clips_month_list %}
+                {% for all in clips_all_list %}
                 <div class="px-2 col-6 col-sm-6 col-md-6 col-lg-3 mb-3">
-                    <div class='clips-pg-clips' data-lity data-lity-target='{{ day.clip_url }}&parent=pogyou.herokuapp.com'>
-                        <img src="{{ day.clip_thumb }}" class='img-fluid clips-pg-img'>
+                    <div class='clips-pg-clips' data-lity data-lity-target='{{ all.clip_url }}&parent=pogyou.herokuapp.com'>
+                        <img src="{{ all.clip_thumb }}" class='img-fluid clips-pg-img'>
 
-                        <div class="clip-meta m-2">{{ day.clip_title }}</div>
+                        <div class="clip-meta m-2">{{ all.clip_title }}</div>
                     </div>
                     <div class="text-muted mt-1">
                         <div>
-                            <a class="text-muted" href="https://www.twitch.tv/{{ day.clip_streamer }}" target="_blank">{{ day.clip_streamer }}</a>
+                            <a class="text-muted" href="https://www.twitch.tv/{{ all.clip_streamer }}" target="_blank">{{ all.clip_streamer }}</a>
                             -
-                            <a class="text-muted" href="https://www.twitch.tv/directory/{{ day.clip_game }}" target="_blank">{{ day.clip_game }}</a>
+                            <a class="text-muted" href="https://www.twitch.tv/directory/{{ all.clip_game }}" target="_blank">{{ all.clip_game }}</a>
                         </div>
-                        <div>{{ day.clip_views | commaFormat }} views</div>
+                        <div>{{ all.clip_views | commaFormat }} views</div>
                     </div>
                 </div>
                 {% endfor %}

@@ -417,7 +417,7 @@ def clips():
             'clip_title': clip_week['title'],
             'clip_views': clip_week['views'],
             'clip_game': clip_week['game'],
-            'clip_streamer': clip_day['broadcaster']['display_name'],
+            'clip_streamer': clip_week['broadcaster']['display_name'],
         }
         clips_week_list.append(clips_info_week)
     # MONTH
@@ -430,7 +430,7 @@ def clips():
             'clip_title': clip_month['title'],
             'clip_views': clip_month['views'],
             'clip_game': clip_month['game'],
-            'clip_streamer': clip_day['broadcaster']['display_name'],
+            'clip_streamer': clip_month['broadcaster']['display_name'],
         }
         clips_month_list.append(clips_info_month)
     # ALL
@@ -443,7 +443,7 @@ def clips():
             'clip_title': clip_all['title'],
             'clip_views': clip_all['views'],
             'clip_game': clip_all['game'],
-            'clip_streamer': clip_day['broadcaster']['display_name'],
+            'clip_streamer': clip_all['broadcaster']['display_name'],
         }
         clips_all_list.append(clips_info_all)
     return render_template('clips.html', title='Top Clips', clips_day_list=clips_day_list, clips_week_list=clips_week_list,
