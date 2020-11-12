@@ -117,12 +117,12 @@
 <div class="row mb-5">
     <div class="col-md-8 mt-5">
         <div class="chart d-flex justify-content center flex-column ">
-            <iframe allowfullscreen='1' src="https://player.twitch.tv/?channel={{user.name}}&parent=pogyou.herokuapp.com&autoplay=false" width='750' height="600"></iframe>
+            <iframe allowfullscreen='1' frameborder='0' src="https://player.twitch.tv/?channel={{user.name}}&parent=pogyou.herokuapp.com&autoplay=false" width='750' height="600"></iframe>
         </div>
     </div>
 
     <div class="col-md-4">
-        <iframe class='mt-5' src="https://www.twitch.tv/embed/{{user.name}}/chat?parent=pogyou.herokuapp.com" height="600" width="300"></iframe>
+        <iframe class='mt-5' frameborder='0' src="https://www.twitch.tv/embed/{{user.name}}/chat?parent=pogyou.herokuapp.com" height="600" width="300"></iframe>
     </div>
 </div>
 {% endfor %}
