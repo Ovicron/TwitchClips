@@ -13,7 +13,7 @@
 <div class='bg-streamer-page text-dark rounded d-flex justify-content-center flex-column shadow shadow-lg'>
     <div class="streamer-banner-bar text-white" style="background-color: rgba(7, 0, 0, 0.7)">
         <h1 class='text-center p-3'>Overview For: <a href='{{ channel.channel_url }}' target="_blank" class='streamer-page-name'>{{ user.name }}</a>
-            <img src="{{ user.logo }}" width="72" class='rounded ml-1'></h1>
+            <img src="{{ user.logo }}" width="70" class='rounded ml-1'></h1>
         {% if not stream_status %}
         <p class='text-center'>Last Played Game: <span class='text-warning'>{{ channel.current_game }}</span></p>
         <p class='text-center'>Current Status: <span class='text-warning'>Offline</span></p>
@@ -27,6 +27,7 @@
         {% endif %}
     </div>
 </div>
+<h5 class='text-center text-info p-4'>Current Stream Title: <span class="text-dark">{{ channel.current_status }}</span></h5>
 <hr>
 
 <div class="row">
@@ -75,16 +76,17 @@
     </div>
     <div class="col-md-4">
         <div class="card shadow mt-5">
-            <div class="card-header">
+            <div class="card-header text-info">
                 Channel Information
             </div>
             <div class="row">
                 <div class="col-6">
                     <ul class="list-group list-group-flush font-weight-bold">
-                        <li class="list-group-item">Language</li>
+                        <li class="list-group-item">language</li>
                         <li class="list-group-item">First Seen</li>
                         <li class="list-group-item">Last Seen</li>
                         <li class="list-group-item">Followers</li>
+                        <li class="list-group-item">Partner Status</li>
                     </ul>
                 </div>
                 <div class="col-6">
@@ -93,6 +95,17 @@
                         <li class="list-group-item">{{ user.first_seen.strftime('%b %d %Y') }}</li>
                         <li class="list-group-item">{{ readable_time }} ago</li>
                         <li class="list-group-item">{{ channel.followers | commaFormat }}</li>
+                        {% if channel.type == 'partner' %}
+                        <li class="list-group-item">
+                            <p class='stream-title'>Twitch {{ channel.type | capitalize }}<i class="fa fa-twitch ml-1"></i></p>
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">
+                            <p class='stream-title'>Not Partnered &#9785;</p>
+                        </li>
+                        {% endif %}
+
+
                     </ul>
                 </div>
             </div>
@@ -100,37 +113,16 @@
     </div>
 </div>
 <hr>
-<!-- chart canvas -->
+<!-- player/chat canvas -->
 <div class="row mb-5">
     <div class="col-md-8 mt-5">
         <div class="chart d-flex justify-content center flex-column ">
-            <h3 class='text-center mb-4'>Viewers for {{ user.name }}'s stream</h3>
-
-            <canvas id="weeklyFollowers" width="600" height="400"></canvas>
+            <iframe allowfullscreen='1' src="https://player.twitch.tv/?channel={{user.name}}&parent=pogyou.herokuapp.com&autoplay=false" width='750' height="600"></iframe>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card shadow other-card-streamer">
-            <div class="card-header">
-                More Information about <span class='text-info'>{{ user.name }}</span>
-            </div>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <span class="font-weight-bold mb-1 s-title">Current Stream Title:</span>
-                    <p class='stream-title'>{{ channel.current_status }}</p>
-                    <hr>
-                    {% if channel.type == 'partner' %}
-                    <p class='stream-title'>Twitch {{ channel.type | capitalize }}<i class="fa fa-twitch ml-1"></i></p>
-                    {% else %}
-                    <p class='stream-title'>Streamer is not Partnered &#9785;</p>
-                    {% endif %}
-                    <div data-lity data-lity-target='https://player.twitch.tv/?channel={{user.name}}&parent=pogyou.herokuapp.com'>
-                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".open-stream">Watch Stream</button>
-                    </div>
-                </blockquote>
-            </div>
-        </div>
+        <iframe class='mt-5' src="https://www.twitch.tv/embed/{{user.name}}/chat?parent=pogyou.herokuapp.com" height="600" width="300"></iframe>
     </div>
 </div>
 {% endfor %}
@@ -215,4 +207,5 @@
         return true
     }
 </script>
+
 {% endblock scripts %}

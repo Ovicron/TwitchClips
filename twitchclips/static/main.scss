@@ -5,12 +5,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Cuprum', sans-serif;
-
+    
 }
 
 
 // html body{
-//     background-color: #cccccc;
+//     background-color: #17141d;
 // }
 
 .container-alert{
@@ -331,4 +331,33 @@
 
 .other-card-list{
     font-size: 13px;
+}
+
+.dark-mode {
+    background-color: black;
+    th {
+        color: white;
+    }
+    td {
+        color: white;
+    }
+    h4 {
+        color: white;
+    }
+    li {
+        background-color: black;
+        color: white;
+    }
+    .card {
+        background-color: black;
+    }
+    div {
+        color: white;
+    }
+    .nav-link {
+        color: white;
+    }
+    .card-body {
+        background-color: black;
+    }
 }

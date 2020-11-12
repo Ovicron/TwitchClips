@@ -369,7 +369,7 @@ def games():
 def streamers():
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
     page = request.args.get('page', 0, type=int)
-    page_size = 12
+    page_size = 21
     try:
         streamers = client.streams.get_live_streams(limit=page_size, offset=page * page_size)
     except:
@@ -395,7 +395,7 @@ def clips():
     client = TwitchClient(app.config['TWITCH_CLIENT_ID'])
 
     # TOP CLIPS API CALLS:
-    clips_day = client.clips.get_top(limit=12, period="day")
+    clips_day = client.clips.get_top(limit=20, period="day")
     clips_day_list = []
     for clip_day in clips_day:
         clips_info_day = {
@@ -408,7 +408,7 @@ def clips():
         }
         clips_day_list.append(clips_info_day)
     # WEEK
-    clips_week = client.clips.get_top(limit=12, period="week")
+    clips_week = client.clips.get_top(limit=20, period="week")
     clips_week_list = []
     for clip_week in clips_week:
         clips_info_week = {
@@ -421,7 +421,7 @@ def clips():
         }
         clips_week_list.append(clips_info_week)
     # MONTH
-    clips_month = client.clips.get_top(limit=12, period="month")
+    clips_month = client.clips.get_top(limit=20, period="month")
     clips_month_list = []
     for clip_month in clips_month:
         clips_info_month = {
@@ -434,7 +434,7 @@ def clips():
         }
         clips_month_list.append(clips_info_month)
     # ALL
-    clips_all = client.clips.get_top(limit=12, period="all")
+    clips_all = client.clips.get_top(limit=20, period="all")
     clips_all_list = []
     for clip_all in clips_all:
         clips_info_all = {
