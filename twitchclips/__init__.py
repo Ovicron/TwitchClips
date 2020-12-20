@@ -21,20 +21,20 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-app.config['SECRET_KEY'] = 'VERYVERYSECRETKEY'
-app.config['TWITCH_CLIENT_ID'] = '9nmje2zw0z52qn0g75wcrbsh1hxwny'
+app.config['SECRET_KEY'] = ''
+app.config['TWITCH_CLIENT_ID'] = ''
 
 
 ENV = 'prod'
 
 if ENV == 'dev':
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:booksami@localhost:6000/twitchclips'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:YOURPASSWORDGOESHERE@localhost:6000/twitchclips'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 elif ENV == 'test':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://gktfyoeiqavwow:6dd7085870301b2f2f8fff9cd366a9a91ad140279a4f93692a6eccec631a9070@ec2-52-70-15-120.compute-1.amazonaws.com:5432/d30atughl0endi'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'HEROKU PGSQL LINK'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
