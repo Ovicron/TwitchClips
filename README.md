@@ -1,5 +1,7 @@
 # TwitchClips
 
-Social media network for Twitch
+A fully functional social media app for twitch. Post clips from twitch, comment on those clips and more.
 
-Post clips/normal text posts and view data about different twitch things
+The site uses twitch API for keeping track of viewership data and many other statistics. 
+
+Link: https://pogyou.herokuapp.com/
