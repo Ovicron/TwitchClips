@@ -26,7 +26,7 @@ def save_viewers():
 
 if __name__ == '__main__':
     schedular = BackgroundScheduler()
-    schedular.add_job(save_viewers, 'interval', minutes=10)
+    schedular.add_job(save_viewers, 'interval', minutes=15)
     schedular.start()
 
     while True:
